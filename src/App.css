@@ -1,38 +1,81 @@
-.App {
-  text-align: center;
-}
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+  margin: 0;
+  padding: 0;
+  block-size: border-box;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* .carousel {
   display: flex;
-  flex-direction: column;
+  height: 400px;
+  width: 100%;
+  max-width: 800px;
+}
+.carousel_wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.carousel_card {
+  display: flex;
+  flex: 1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0px 0px 11px 3px rgba(0, 0, 0, 0.35);
+  -webkit-box-shadow: 0px 0px 11px 3px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.8);
+  transition: 0.5s ease-in-out;
+}
+.carousel_card-active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: visible;
+}
+.card_image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card_overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
   align-items: center;
+  padding: 40px 30px;
+  cursor: pointer;
+}
+.card_title {
+  color: black;
+  font-size: 30px;
+}
+.carousel_arrow_left,
+.carousel_arrow_right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(0, -50%);
+  background-color: gainsboro;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+  font-size: 50px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
-
-.App-link {
-  color: #61dafb;
+.carousel_arrow_left{
+  left: 15px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+.carousel_arrow_right{
+  right: 15px;
+} */
