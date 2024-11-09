@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaLightbulb, FaTools, FaHome, FaProjectDiagram, FaCalendarCheck } from 'react-icons/fa';
+import { FaLightbulb, FaTools, FaHome, FaProjectDiagram, FaCalendarCheck, FaDesktop, FaBuilding, FaPeopleCarry } from 'react-icons/fa';
 
 export default function Service() {
   const services = [
@@ -28,13 +28,37 @@ export default function Service() {
       title: 'Event Lighting',
       description: 'Creating unforgettable experiences with dynamic lighting setups for events and celebrations.',
     },
+    // Additional Services
+    {
+      icon: <FaDesktop className="text-blue-800 text-4xl mb-4" />,
+      title: 'Lighting Design Consulting',
+      description: 'Offering expert consulting to create the perfect lighting designs for any space or project.',
+    },
+    {
+      icon: <FaBuilding className="text-blue-800 text-4xl mb-4" />,
+      title: 'Outdoor Lighting',
+      description: 'Providing sophisticated and durable outdoor lighting solutions for homes and businesses.',
+    },
+    {
+      icon: <FaPeopleCarry className="text-blue-800 text-4xl mb-4" />,
+      title: 'Lighting for Public Spaces',
+      description: 'Designing safe, functional, and aesthetically pleasing lighting for parks, streets, and more.',
+    },
   ];
 
   return (
     <div className="bg-gray-100 py-16 px-8">
       {/* Main Container */}
       <div className="max-w-6xl mx-auto text-center">
-        <h1 className="text-4xl font-bold text-blue-800 mb-12">Our Services</h1>
+        <h1 className="text-4xl font-bold text-blue-800 mb-2">Our Services</h1>
+
+        {/* Introduction Paragraph */}
+        <p className="text-lg text-gray-700 mb-12">
+          We are dedicated to bringing light into every aspect of your life, whether you're enhancing your home,
+          business, or event. Our services are designed to provide you with the highest quality lighting solutions
+          that are energy-efficient, aesthetically pleasing, and tailored to your specific needs. Explore our
+          diverse range of services and find the perfect solution for your lighting needs.
+        </p>
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">

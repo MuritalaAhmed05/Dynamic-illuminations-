@@ -3,76 +3,159 @@ import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
 export default function Contact() {
   return (
-    <div className="bg-gray-100 py-16 px-8">
-      {/* Main Container */}
-      <div className="max-w-4xl mx-auto text-center">
-        <h1 className="text-4xl font-bold text-blue-800 mb-12">Get in Touch</h1>
+    <div>
+      {/* Hero Section */}
+      <div className="relative w-full h-[500px] overflow-hidden">
+  {/* Darkened and Blurred Background Image */}
+  <img
+    src="/images/panel7.jpg"
+    alt="panel"
+    className="w-full h-full object-cover shadow-lg filter brightness-50 blur-sm"
+  />
 
-        {/* Contact Form and Details Container */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <form className="bg-white p-8 rounded-lg shadow-lg">
-            <div className="mb-6">
-              <label htmlFor="name" className="block text-left text-gray-700 font-semibold mb-2">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                placeholder="Your Name"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                required
-              />
-            </div>
-            <div className="mb-6">
-              <label htmlFor="email" className="block text-left text-gray-700 font-semibold mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                placeholder="Your Email"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                required
-              />
-            </div>
-            <div className="mb-6">
-              <label htmlFor="message" className="block text-left text-gray-700 font-semibold mb-2">
-                Message
-              </label>
-              <textarea
-                id="message"
-                rows="5"
-                placeholder="Your Message"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                required
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-blue-800 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Send Message
-            </button>
-          </form>
+  {/* Centered Text Overlay */}
+  <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white p-6 bg-opacity-70 rounded-xl shadow-2xl max-w-3xl mx-auto">
+    {/* Title */}
+    <h2 className="font-bold text-4xl leading-tight mb-4 text-shadow-lg">
+      Contact Us
+    </h2>
+    {/* Small Speech Sentence */}
+    <p className="text-lg sm:text-xl md:text-2xl font-medium max-w-md">
+      "We're here to help! Reach out and we'll get back to you shortly."
+    </p>
+  </div>
+</div>
 
-          {/* Contact Details */}
-          <div className="bg-white p-8 rounded-lg shadow-lg flex flex-col justify-center ">
-            <div className="mb-6 flex gap-5 items-center">
-              <FaPhone className="text-blue-800 text-2xl mb-2" />
+
+      {/* Main Content */}
+      <div className="bg-gray-100 py-16 px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Contact Icons Section */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div className="shadow-lg flex flex-col items-center p-6 bg-white rounded-lg">
+              <FaPhone className="text-blue-800 text-3xl mb-4" />
+               <h1 className='font-bold text-[18px]'>Call Us</h1>
               <p className="text-gray-700">+234 810 753 3654</p>
             </div>
-            <div className="mb-6 flex gap-5 items-center">
-              <FaEnvelope className="text-blue-800 text-2xl mb-2" />
+            <div className="shadow-lg flex flex-col items-center p-6 bg-white rounded-lg">
+              <FaEnvelope className="text-blue-800 text-3xl mb-4" />
+               <h1 className='font-bold text-[18px]'>Email</h1>
               <p className="text-gray-700">info@dynamicsilluminations.com</p>
             </div>
-            <div className='flex gap-5 items-center'>
-              <FaMapMarkerAlt className="text-blue-800 text-2xl mb-2" />
-              <p className="text-gray-700">3C, Complex st, Finbarrs Road Akoka Lagos</p>
+            <div className="shadow-lg flex flex-col items-center p-6 bg-white rounded-lg">
+              <FaMapMarkerAlt className="text-blue-800 text-3xl mb-4" />
+               <h1 className='font-bold text-[18px]'>Address</h1>
+              <p className="text-gray-700">3C, Complex St, Finbarrs Road Akoka Lagos</p>
             </div>
+          </div>
+
+          <h1 className="text-4xl font-bold text-blue-800 mb-12">Get in Touch</h1>
+
+          {/* Contact Form and Map Section */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {/* Contact Form */}
+           {/* Introductory Message */}
+
+            <form className="bg-white p-8 rounded-lg shadow-lg">
+<p className="text-gray-700 text-center font-semibold">
+  "We'd love to hear from you! Whether you have questions, feedback, or just want to say hello, send us a message and we'll get back to you as soon as possible."
+</p>
+              <div className="mb-6">
+                <label htmlFor="name" className="block text-left text-gray-700 font-semibold mb-2">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="Your Name"
+                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  required
+                />
+              </div>
+              <div className="mb-6">
+                <label htmlFor="email" className="block text-left text-gray-700 font-semibold mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Your Email"
+                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  required
+                />
+              </div>
+              <div className="mb-6">
+                <label htmlFor="message" className="block text-left text-gray-700 font-semibold mb-2">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  rows="5"
+                  placeholder="Your Message"
+                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  required
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-blue-800 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Send Message
+              </button>
+            </form>
+
+           {/* Map Section with Embedded Google Map */}
+<div className="flex flex-col items-center justify-center w-full  bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+
+  
+  {/* Embedded Google Map */}
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.97634263081!2d3.3829417738266323!3d6.524671223152128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8d020bb422d1%3A0xcd6f6a180ec6098!2s3C%20Complex!5e0!3m2!1sen!2sng!4v1731166428810!5m2!1sen!2sng"
+    width="100%"
+    height="100%"
+    style={{ border: 0 }}
+    allowFullScreen={true}
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+    title="Company Location Map"
+    className="w-full h-full"
+  ></iframe>
+</div>
+
           </div>
         </div>
       </div>
+
+      {/* Slanted Image and Quick Contact Section */}
+      <div className="flex w-full h-auto md:h-[150px] bg-blue-700">
+  {/* Slanted Image */}
+  <div
+    className="w-full md:w-1/3 h-auto md:h-full overflow-hidden relative"
+    style={{ clipPath: 'polygon(0 0, 100% 0%, 80% 100%, 0% 100%)' }}
+  >
+    <img src="/images/panel2.jpg" alt="panel" className="w-full h-full object-cover shadow-lg" />
+  </div>
+
+  {/* Slanted Contact Info */}
+  <div className="w-full md:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6">
+    {/* Left Section */}
+    <div className=" text-white flex flex-col items-start justify-center pl-6 md:pl-8 pr-4 py-6 md:py-8 h-full relative rounded-lg">
+      <p className="text-sm md:text-base font-medium mb-2">We're here for you!</p>
+      <h1 className="font-bold text-xl md:text-2xl lg:text-3xl leading-tight">
+        Need a Quick Service?
+      </h1>
+    </div>
+
+    {/* Right Section */}
+    <div className="flex items-center justify-start p-2 md:p-4">
+      <p className="text-sm md:text-lg font-semibold bg-gray-700 py-2 px-6 rounded-md cursor-pointer hover:bg-gray-600 transition-colors">
+        Click Here
+      </p>
+    </div>
+  </div>
+</div>
+
+
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { FaLightbulb } from 'react-icons/fa';
 const MyCarousel = ({ images }) => {
   const [current, setCurrent] = useState(0);
 
@@ -33,14 +33,18 @@ const MyCarousel = ({ images }) => {
                 : "opacity-0 scale-[0.8] pointer-events-none"
             }`}
           >
-            <img
-              src={image.url}
-              alt={image.legend}
-              className="w-full h-full object-cover  shadow-lg"
-            />
-        <div className="absolute sm:left-[9rem] top-1/2 transform -translate-y-1/2 text-white p-6 bg-opacity-60 rounded-xl shadow-2xl max-w-xl left-4 sm:max-w-md sm:p-4 sm:text-lg md:left-[5rem] md:text-2xl lg:left-[6rem] lg:text-3xl">
-  <h2 className="font-bold leading-snug text-shadow-md">{image.legend}</h2>
-</div>
+           <img
+    src={image.url}
+    alt={image.legend}
+    className="w-full h-full object-cover transition-opacity duration-300 filter "
+  />
+  <div className="absolute sm:left-[9rem] top-1/2 transform -translate-y-1/2 text-white p-6 bg-opacity-60 rounded-xl shadow-2xl max-w-xl left-4 sm:max-w-[40rem] sm:p-4 sm:text-base md:left-[5rem] md:text-xl lg:left-[6rem] lg:text-2xl">
+  <p className="rounded-md sm:inline-flex items-center bg-gray-400 p-2 hidden">
+  <FaLightbulb className="text-blue-500 text-lg mr-2" />
+  <span className="text-sm">Improve our customers’ lives by providing effective solutions.</span>
+</p>
+    <h2 className="font-bold leading-snug text-shadow-md">{image.legend}</h2>
+  </div>
 
 
 
