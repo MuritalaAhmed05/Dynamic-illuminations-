@@ -2,3 +2,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+    font-family: 'RobotoFlex-Regular';
+    src: url('../public/fonts/RobotoFlex-Regular.ttf');
+  }
+  
+/* .ill{
+  letter-spacing: 20px;
+} */

@@ -1,5 +1,18 @@
 import React from 'react';
-import { FaLightbulb, FaTools, FaHome, FaProjectDiagram, FaCalendarCheck, FaDesktop, FaBuilding, FaPeopleCarry } from 'react-icons/fa';
+import {
+  FaLightbulb,
+  FaTools,
+  FaHome,
+  FaProjectDiagram,
+  FaCalendarCheck,
+  FaDesktop,
+  FaBuilding,
+  FaPeopleCarry,
+  FaSolarPanel,
+  FaCamera,
+  FaBatteryFull,
+  FaPlug,
+} from 'react-icons/fa';
 
 export default function Service() {
   const services = [
@@ -28,7 +41,6 @@ export default function Service() {
       title: 'Event Lighting',
       description: 'Creating unforgettable experiences with dynamic lighting setups for events and celebrations.',
     },
-    // Additional Services
     {
       icon: <FaDesktop className="text-blue-800 text-4xl mb-4" />,
       title: 'Lighting Design Consulting',
@@ -44,6 +56,27 @@ export default function Service() {
       title: 'Lighting for Public Spaces',
       description: 'Designing safe, functional, and aesthetically pleasing lighting for parks, streets, and more.',
     },
+    // New Services
+    {
+      icon: <FaCamera className="text-blue-800 text-4xl mb-4" />,
+      title: 'CCTV Installation',
+      description: 'Ensuring security with high-quality CCTV systems for homes, offices, and public spaces.',
+    },
+    {
+      icon: <FaSolarPanel className="text-blue-800 text-4xl mb-4" />,
+      title: 'Solar Installation',
+      description: 'Harnessing solar energy with efficient installations for residential and commercial properties.',
+    },
+    {
+      icon: <FaBatteryFull className="text-blue-800 text-4xl mb-4" />,
+      title: 'Sales of Solar Panels & Batteries',
+      description: 'Supplying top-tier solar panels and batteries for sustainable energy solutions.',
+    },
+    {
+      icon: <FaPlug className="text-blue-800 text-4xl mb-4" />,
+      title: 'Electrical Wiring & Services',
+      description: 'Providing professional electrical wiring and maintenance services for all property types.',
+    },
   ];
 
   return (
@@ -57,7 +90,7 @@ export default function Service() {
           We are dedicated to bringing light into every aspect of your life, whether you're enhancing your home,
           business, or event. Our services are designed to provide you with the highest quality lighting solutions
           that are energy-efficient, aesthetically pleasing, and tailored to your specific needs. Explore our
-          diverse range of services and find the perfect solution for your lighting needs.
+          diverse range of services and find the perfect solution for your needs.
         </p>
 
         {/* Services Grid */}

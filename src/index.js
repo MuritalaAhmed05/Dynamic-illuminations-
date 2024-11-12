@@ -23,7 +23,7 @@ root.render(
         <Route path="/service" element={<Service />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/trainig" element={<Training />} />
+        <Route path="/training" element={<Training />} />
       </Routes>
       <Footer/>
     </Router>
