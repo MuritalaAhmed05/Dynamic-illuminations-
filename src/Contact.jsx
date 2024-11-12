@@ -127,7 +127,7 @@ export default function Contact() {
       </div>
 
       {/* Slanted Image and Quick Contact Section */}
-      <div className="flex w-full h-auto md:h-[150px] bg-blue-700">
+      <div className="hidden sm:flex w-full h-auto  md:h-[150px] bg-blue-700">
   {/* Slanted Image */}
   <div
     className="w-full md:w-1/3 h-auto md:h-full overflow-hidden relative"

@@ -14,15 +14,15 @@ export default function Footer() {
   return (
     <div className="bg-gray-900 text-gray-200">
       {/* Main Container */}
-      <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-9 p-8">
+      <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-9 p-8 place-items-center text-center sm:text-left">
         {/* Logo & Social Links */}
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-center sm:items-start">
           <img src="/images/dynamics-L.png" alt="logo" className="w-32 mb-6" />
-          <div className='flex flex-col text-center leading-3 mb-4'>
-          <span className="text-2xl font-semibold tracking-[2px] font-roboto text-blue-800">Dynamic</span>
-          <span className="font-roboto tracking-[5px] text-blue-800 ill">Illuminations</span>
-        </div>
-          <div className="flex gap-4 items-center">
+          <div className="flex flex-col text-center leading-3 mb-4">
+            <span className="text-2xl font-semibold tracking-[2px] font-roboto text-blue-800">Dynamic</span>
+            <span className="font-roboto tracking-[5px] text-blue-800 ill">Illuminations</span>
+          </div>
+          <div className="flex gap-4 items-center justify-center sm:justify-start">
             <FaInstagram className="hover:text-pink-500 transition-all text-3xl sm:text-2xl" />
             {/* <FaSquareFacebook className="hover:text-blue-500 transition-all text-3xl sm:text-2xl" /> */}
             <FaXTwitter className="hover:text-blue-400 transition-all text-3xl sm:text-2xl" />
@@ -31,7 +31,7 @@ export default function Footer() {
         </div>
 
         {/* Quick Links */}
-        <div className="flex flex-col space-y-3">
+        <div className="flex flex-col space-y-3 justify-center text-center sm:text-left">
           <p className="font-bold text-gray-300">Quick Links</p>
           <Link to="/" className="hover:text-cyan-400 transition-colors text-sm">
             Home
@@ -51,7 +51,7 @@ export default function Footer() {
         </div>
 
         {/* Customer Care & Info */}
-        <div className="space-y-3 text-sm">
+        <div className="space-y-3 text-sm text-center sm:text-left">
           <p className="font-medium text-gray-300">Customer Care</p>
           <p className="hover:text-gray-400 cursor-pointer">FAQ</p>
           <p className="hover:text-gray-400 cursor-pointer">Enrollment</p>
@@ -59,19 +59,19 @@ export default function Footer() {
         </div>
 
         {/* Contact Us */}
-        <div className="space-y-4">
+        <div className="space-y-4 text-center sm:text-left">
           <h2 className="text-lg font-semibold text-gray-300">Contact Us</h2>
-          <div className="flex items-center text-sm gap-2">
+          <div className="flex items-center justify-center sm:justify-start text-sm gap-2">
             <FaLocationDot className="text-yellow-500" />
             <span>3C, Complex St, Finbarrs Road, Akoka Lagos</span>
           </div>
-          <div className="flex items-center text-sm gap-2">
+          <div className="flex items-center justify-center sm:justify-start text-sm gap-2">
             <MdWhatsapp className="text-green-500" />
-            <span>+2349020507509</span>
+            <span>+234 810 753 3654</span>
           </div>
-          <div className="flex items-center text-sm gap-2">
+          <div className="flex items-center justify-center sm:justify-start text-sm gap-2">
             <FaPhone className="text-blue-500" />
-            <span>+2349020507509</span>
+            <span>+234 810 753 3654</span>
           </div>
 
           {/* Email Input */}
@@ -91,7 +91,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Footer */}
+      {/* Footer Bottom */}
       <footer className="bg-gray-950 text-gray-500 py-4 text-center">
         <p>&copy; {new Date().getFullYear()} Dynamics Illuminations. All rights reserved.</p>
       </footer>

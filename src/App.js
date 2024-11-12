@@ -178,11 +178,11 @@ function App() {
         <div className="flex flex-col md:flex-row justify-center gap-8">
           <div className="flex items-center gap-4">
             <FaPhoneAlt className="text-2xl" />
-            <p className="text-lg">+1 123 456 7890</p>
+            <p className="text-lg">+234 810 753 3654</p>
           </div>
           <div className="flex items-center gap-4">
             <FaEnvelope className="text-2xl" />
-            <p className="text-lg">info@dynamicilluminations.com</p>
+            <p className="text-lg">dynamicilluminations44@gmail.com</p>
           </div>
         </div>
       </section>
