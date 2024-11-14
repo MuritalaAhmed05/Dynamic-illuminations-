@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import AOS styles
 
 export default function About() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Duration of the animation
+      easing: 'ease-in-out', // Easing function for the animation
+      once: true, // Whether the animation should trigger once or repeat
+    });
+  }, []);
+
   return (
     <div className="bg-gray-100 py-16 px-8">
       {/* Main Container */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8">
         
         {/* First Story */}
-        <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left">
+        <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left" data-aos="fade-up">
           <img
             src="/images/image11.jpg"
             alt="Industrial Solar Installations in a factory or large-scale setting"
@@ -22,7 +32,7 @@ export default function About() {
         </div>
 
         {/* Second Story */}
-        <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left">
+        <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left" data-aos="fade-up" data-aos-delay="100">
           <img
             src="/images/panel3.jpg"
             alt="Energy-efficient lighting installation for a large space"
@@ -37,7 +47,7 @@ export default function About() {
         </div>
 
         {/* Third Story */}
-        <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left">
+        <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left" data-aos="fade-up" data-aos-delay="200">
           <img
             src="/images/battery1.jpg"
             alt="Smart home integration with lighting system"
@@ -52,7 +62,7 @@ export default function About() {
         </div>
 
         {/* Fourth Story */}
-        <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left">
+        <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left" data-aos="fade-up" data-aos-delay="300">
           <img
             src="/images/inverters.jpg"
             alt="Event lighting setup for a large wedding or corporate event"
@@ -67,7 +77,7 @@ export default function About() {
         </div>
 
         {/* Fifth Story */}
-        <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left">
+        <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left" data-aos="fade-up" data-aos-delay="400">
           <img
             src="/images/simple.jpg"
             alt="Architectural lighting design focusing on building aesthetics"
@@ -82,7 +92,7 @@ export default function About() {
         </div>
 
         {/* Sixth Story */}
-        <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left">
+        <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left" data-aos="fade-up" data-aos-delay="500">
           <img
             src="/images/panel7.jpg"
             alt="Architectural lighting illuminating the exterior of a building"
@@ -96,21 +106,34 @@ export default function About() {
           </div>
         </div>
 
+        <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left" data-aos="fade-up" data-aos-delay="600">
+          <img
+            src="/images/farm1.jpeg"
+            alt="Solar panels used for commercial solar farming"
+            className="rounded-lg shadow-lg object-cover w-full h-[250px] sm:w-[45%] sm:mr-8 mb-4 sm:mb-0"
+          />
+          <div className="sm:w-[50%]">
+            <h2 className="text-xl font-semibold text-blue-800 mb-2">Solar Farming and Commercial Installations</h2>
+            <p className="text-gray-700">
+              Beyond lighting, we specialize in solar farming and commercial solar installations. Our projects range from small commercial solar systems to large-scale solar farms designed to harness clean, renewable energy for businesses and communities. By adopting solar energy, we help you lower operational costs while contributing to a more sustainable environment.
+            </p>
+          </div>
+        </div>
+
         {/* Seventh Story */}
-        <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left">
+        <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left" data-aos="fade-up" data-aos-delay="700">
           <img
             src="/images/traing3.jpg"
             alt="Training for lighting system installation"
             className="rounded-lg shadow-lg object-cover w-full h-[250px] sm:w-[45%] sm:mr-8 mb-4 sm:mb-0"
           />
           <div className="sm:w-[50%]">
-            <h2 className="text-xl font-semibold text-blue-800 mb-2">Lighting Installation Training</h2>
+            <h2 className="text-xl font-semibold text-blue-800 mb-2">Training and Education</h2>
             <p className="text-gray-700">
-              We also provide training programs for lighting system installations, helping you develop the necessary skills to execute high-quality, professional installations in both residential and commercial spaces.
+              At Dynamic Illuminations, we believe in empowering the next generation of lighting professionals. We offer hands-on training sessions for individuals interested in learning the skills required for installation and maintenance of both traditional and solar-powered lighting systems.
             </p>
           </div>
         </div>
-
       </div>
     </div>
   );

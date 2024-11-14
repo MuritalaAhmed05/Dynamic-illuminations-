@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css"; // Import AOS CSS
 import MyCarousel from "./components/carousel";
 import { places } from "./components/data";
 import {
@@ -19,14 +21,22 @@ import {
 } from "react-icons/fa";
 
 function App() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Animation duration in ms
+      easing: "ease-in-out", // Easing function
+      once: true, // Animation happens only once
+    });
+  }, []);
+
   return (
     <div className="bg-gray-50 text-gray-800">
       {/* Header Section */}
       <header className="bg-blue-900 text-white py-6 px-8 text-center shadow-lg">
-        <h1 className="text-4xl font-bold">
+        <h1 className="text-4xl font-bold" data-aos="fade-down">
           Welcome to Dynamic Illuminations
         </h1>
-        <p className="mt-2 text-lg">
+        <p className="mt-2 text-lg" data-aos="fade-up">
           Brightening your world with innovative lighting solutions
         </p>
       </header>
@@ -38,33 +48,33 @@ function App() {
 
       {/* Services Section */}
       <section className="py-12 px-8 bg-white">
-        <h2 className="text-3xl font-bold text-center mb-8 text-blue-900">
+        <h2 className="text-3xl font-bold text-center mb-8 text-blue-900" data-aos="fade-up">
           Our Key Services
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {/* Service Cards */}
-          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all">
+          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all" data-aos="zoom-in">
             <FaLightbulb className="text-4xl text-yellow-500 mb-4" />
             <h3 className="text-xl font-semibold text-blue-900">Architectural Lighting</h3>
             <p className="mt-4 text-gray-600">
               Transforming spaces with creative architectural lighting designs.
             </p>
           </div>
-          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all">
+          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all" data-aos="zoom-in">
             <FaCalendarAlt className="text-4xl text-blue-500 mb-4" />
             <h3 className="text-xl font-semibold text-blue-900">Event Lighting</h3>
             <p className="mt-4 text-gray-600">
               Enhancing your events with customized lighting setups.
             </p>
           </div>
-          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all">
+          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all" data-aos="zoom-in">
             <FaHome className="text-4xl text-green-500 mb-4" />
             <h3 className="text-xl font-semibold text-blue-900">Smart Home Solutions</h3>
             <p className="mt-4 text-gray-600">
               Automating your home with intelligent lighting systems.
             </p>
           </div>
-          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all">
+          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all" data-aos="zoom-in">
             <FaCamera className="text-4xl text-red-500 mb-4" />
             <h3 className="text-xl font-semibold text-blue-900">Camera Installation</h3>
             <p className="mt-4 text-gray-600">
@@ -72,7 +82,7 @@ function App() {
               for security.
             </p>
           </div>
-          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all">
+          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all" data-aos="zoom-in">
             <FaSolarPanel className="text-4xl text-yellow-700 mb-4" />
             <h3 className="text-xl font-semibold text-blue-900">Solar Solutions</h3>
             <p className="mt-4 text-gray-600">
@@ -80,7 +90,7 @@ function App() {
               installations.
             </p>
           </div>
-          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all">
+          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all" data-aos="zoom-in">
             <FaWrench className="text-4xl text-gray-500 mb-4" />
             <h3 className="text-xl font-semibold text-blue-900">Electrical Wiring</h3>
             <p className="mt-4 text-gray-600">
@@ -88,7 +98,7 @@ function App() {
               commercial buildings.
             </p>
           </div>
-          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all">
+          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all" data-aos="zoom-in">
             <FaTheaterMasks className="text-4xl text-purple-600 mb-4" />
             <h3 className="text-xl font-semibold text-blue-900">Home Theater Systems</h3>
             <p className="mt-4 text-gray-600">
@@ -96,7 +106,7 @@ function App() {
               installations.
             </p>
           </div>
-          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all">
+          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all" data-aos="zoom-in">
             <FaLock className="text-4xl text-orange-500 mb-4" />
             <h3 className="text-xl font-semibold text-blue-900">Smart Security Systems</h3>
             <p className="mt-4 text-gray-600">
@@ -104,7 +114,7 @@ function App() {
               automation.
             </p>
           </div>
-          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all">
+          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all" data-aos="zoom-in">
             <FaPaintBrush className="text-4xl text-pink-500 mb-4" />
             <h3 className="text-xl font-semibold text-blue-900">
               Lighting Design Consulting
@@ -114,7 +124,7 @@ function App() {
               your needs.
             </p>
           </div>
-          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all">
+          <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all" data-aos="zoom-in">
             <FaLeaf className="text-4xl text-green-700 mb-4" />
             <h3 className="text-xl font-semibold text-blue-900">
               Energy Efficient Solutions
@@ -129,12 +139,12 @@ function App() {
 
       {/* Testimonials Section */}
       <section className="bg-blue-50 py-12 px-8">
-        <h2 className="text-3xl font-bold text-center mb-8 text-blue-900">
+        <h2 className="text-3xl font-bold text-center mb-8 text-blue-900" data-aos="fade-up">
           What Our Clients Say
         </h2>
         <div className="flex flex-col md:flex-row justify-center gap-8">
           {/* Testimonial 1 */}
-          <div className="bg-white p-6 rounded-lg shadow-md max-w-sm text-center hover:shadow-xl transition-all">
+          <div className="bg-white p-6 rounded-lg shadow-md max-w-sm text-center hover:shadow-xl transition-all" data-aos="fade-up">
             <FaStar className="text-yellow-500 text-4xl mb-4 mx-auto" />
             <p>
               "Dynamic Illuminations transformed our event into a spectacular experience with their lighting solutions!"
@@ -143,7 +153,7 @@ function App() {
           </div>
 
           {/* Testimonial 2 */}
-          <div className="bg-white p-6 rounded-lg shadow-md max-w-sm text-center hover:shadow-xl transition-all">
+          <div className="bg-white p-6 rounded-lg shadow-md max-w-sm text-center hover:shadow-xl transition-all" data-aos="fade-up">
             <FaUsers className="text-blue-500 text-4xl mb-4 mx-auto" />
             <p>
               "We automated our office lighting with their smart solutions, and the results are incredible!"
@@ -152,7 +162,7 @@ function App() {
           </div>
 
           {/* Testimonial 3 */}
-          <div className="bg-white p-6 rounded-lg shadow-md max-w-sm text-center hover:shadow-xl transition-all">
+          <div className="bg-white p-6 rounded-lg shadow-md max-w-sm text-center hover:shadow-xl transition-all" data-aos="fade-up">
             <FaLightbulb className="text-yellow-500 text-4xl mb-4 mx-auto" />
             <p>
               "The architectural lighting they designed for our building was beyond our expectations."
@@ -161,34 +171,15 @@ function App() {
           </div>
 
           {/* Testimonial 4 */}
-          <div className="bg-white p-6 rounded-lg shadow-md max-w-sm text-center hover:shadow-xl transition-all">
-            <FaHome className="text-green-500 text-4xl mb-4 mx-auto" />
+          <div className="bg-white p-6 rounded-lg shadow-md max-w-sm text-center hover:shadow-xl transition-all" data-aos="fade-up">
+            <FaCamera className="text-red-500 text-4xl mb-4 mx-auto" />
             <p>
-              "Their smart home lighting system made our house more energy-efficient and convenient!"
+              "Their event lighting made our product launch look amazing. Highly recommended!"
             </p>
-            <span className="text-gray-600 mt-4 block">- Michael Brown, Homeowner</span>
+            <span className="text-gray-600 mt-4 block">- Michael Green, Marketing Manager</span>
           </div>
         </div>
       </section>
-
-      {/* Contact Section */}
-      <section className="bg-blue-900 text-white py-12 px-8 text-center">
-        <h2 className="text-3xl font-bold mb-6">Get in Touch</h2>
-        <p className="text-lg mb-6">Have a project in mind? Let's light it up!</p>
-        <div className="flex flex-col md:flex-row justify-center gap-8">
-          <div className="flex items-center gap-4">
-            <FaPhoneAlt className="text-2xl" />
-            <p className="text-lg">+234 810 753 3654</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <FaEnvelope className="text-2xl" />
-            <p className="text-sm">dynamicilluminations44@gmail.com</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-     
     </div>
   );
 }

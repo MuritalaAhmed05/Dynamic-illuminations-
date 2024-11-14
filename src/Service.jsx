@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   FaLightbulb,
   FaTools,
@@ -13,8 +13,14 @@ import {
   FaBatteryFull,
   FaPlug,
 } from 'react-icons/fa';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function Service() {
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+
   const services = [
     {
       icon: <FaLightbulb className="text-blue-800 text-4xl mb-4" />,
@@ -94,14 +100,19 @@ export default function Service() {
         </p>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
           {services.map((service, index) => (
             <div
               key={index}
               className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+              data-aos="fade-up" // AOS Animation
+              data-aos-delay={index * 100} // Delay based on index
+              aria-labelledby={`service-${index}-title`}
             >
-              {service.icon}
-              <h2 className="text-2xl font-semibold mb-4">{service.title}</h2>
+              <div aria-label={service.title}>{service.icon}</div>
+              <h2 id={`service-${index}-title`} className="text-2xl font-semibold mb-4">
+                {service.title}
+              </h2>
               <p className="text-gray-700">{service.description}</p>
             </div>
           ))}

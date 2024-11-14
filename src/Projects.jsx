@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import 'aos/dist/aos.css'; // Import AOS styles
+import AOS from 'aos'; // Import AOS JS
 
 const projects = [
   {
@@ -28,6 +30,13 @@ const projects = [
 ];
 
 export default function Projects() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Duration of the animation (ms)
+      once: true, // Animation will only happen once
+    });
+  }, []);
+
   return (
     <div className="bg-gray-100 py-16 px-8">
       {/* Main Container */}
@@ -40,11 +49,13 @@ export default function Projects() {
             <div
               key={project.id}
               className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+              data-aos="fade-up" // Adding AOS effect for this project
             >
               <img
                 src={project.image}
                 alt={project.title}
                 className="w-full h-48 object-cover"
+                onError={(e) => e.target.src = '/path/to/fallback-image.jpg'} // Fallback image
               />
               <div className="p-6">
                 <h2 className="text-2xl font-semibold mb-4">{project.title}</h2>
