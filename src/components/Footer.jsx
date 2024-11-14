@@ -14,13 +14,13 @@ export default function Footer() {
   return (
     <div className="bg-gray-900 text-gray-200">
       {/* Main Container */}
-      <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-9 p-8 place-items-center text-center sm:text-left">
+      <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1  gap-9 p-8 text-center sm:text-left">
         {/* Logo & Social Links */}
         <div className="flex flex-col items-center sm:items-start">
-          <img src="/images/dynamics-L.png" alt="logo" className="w-32 mb-6" />
+          <img src="/images/logo2.png" alt="logo" className="w-32 mb-6" />
           <div className="flex flex-col text-center leading-3 mb-4">
-            <span className="text-2xl font-semibold tracking-[2px] font-roboto text-blue-800">Dynamic</span>
-            <span className="font-roboto tracking-[5px] text-blue-800 ill">Illuminations</span>
+            <span className="text-2xl font-semibold tracking-[2px] font-roboto text-[#004B84]">Dynamic</span>
+            <span className="font-roboto tracking-[5px] text-[#004B84] ill">Illuminations</span>
           </div>
           <div className="flex gap-4 items-center justify-center sm:justify-start">
             <FaInstagram className="hover:text-pink-500 transition-all text-3xl sm:text-2xl" />
@@ -51,18 +51,19 @@ export default function Footer() {
         </div>
 
         {/* Customer Care & Info */}
-        <div className="space-y-3 text-sm text-center sm:text-left">
-          <p className="font-medium text-gray-300">Customer Care</p>
-          <p className="hover:text-gray-400 cursor-pointer">FAQ</p>
-          <p className="hover:text-gray-400 cursor-pointer">Enrollment</p>
-          <p className="hover:text-gray-400 cursor-pointer">Terms of Service</p>
+        <div className="space-y-3 text-sm text-center sm:text-left flex flex-col">
+          <p className="mb-[2.9rem]"></p>
+          <Link to="/" className="font-medium text-gray-300">Customer Care</Link>
+          <Link to="/Faq" className="hover:text-gray-400 cursor-pointer">FAQ</Link>
+          <Link to="/" className="hover:text-gray-400 cursor-pointer">Enrollment</Link>
+          <Link to="/" className="hover:text-gray-400 cursor-pointer">Terms of Service</Link>
         </div>
 
         {/* Contact Us */}
         <div className="space-y-4 text-center sm:text-left">
           <h2 className="text-lg font-semibold text-gray-300">Contact Us</h2>
-          <div className="flex items-center justify-center sm:justify-start text-sm gap-2">
-            <FaLocationDot className="text-yellow-500" />
+          <div className="flex items-center justify-center sm:justify-start text-sm sm:gap-2">
+            <FaLocationDot className="text-yellow-500 self-start sm:self-center" />
             <span>3C, Complex St, Finbarrs Road, Akoka Lagos</span>
           </div>
           <div className="flex items-center justify-center sm:justify-start text-sm gap-2">

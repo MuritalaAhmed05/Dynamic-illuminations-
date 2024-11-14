@@ -182,7 +182,7 @@ function App() {
           </div>
           <div className="flex items-center gap-4">
             <FaEnvelope className="text-2xl" />
-            <p className="text-lg">dynamicilluminations44@gmail.com</p>
+            <p className="text-sm">dynamicilluminations44@gmail.com</p>
           </div>
         </div>
       </section>
