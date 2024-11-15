@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { db } from '../firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-import { FaStar, FaChevronLeft, FaChevronRight } from 'react-icons/fa'; // For rating stars and arrows
+import {  FaChevronLeft, FaChevronRight } from 'react-icons/fa'; // For rating stars and arrows
 
 const ReviewList = () => {
   const [reviews, setReviews] = useState([]);
@@ -45,7 +45,7 @@ const ReviewList = () => {
         <div className="relative">
           {/* Left Arrow */}
           <div
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 cursor-pointer z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-600 transition-all"
+            className="absolute left-[-35px] top-1/2 transform -translate-y-1/2 cursor-pointer z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-600 transition-all"
             onClick={() => scrollContent('left')}
           >
             <FaChevronLeft className="text-xl" />
@@ -53,7 +53,7 @@ const ReviewList = () => {
           
           {/* Right Arrow */}
           <div
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-600 transition-all"
+            className="absolute right-[-35px]  top-1/2 transform -translate-y-1/2 cursor-pointer z-10 bg-gray-800 text-white rounded-full p-2 hover:bg-gray-600 transition-all"
             onClick={() => scrollContent('right')}
           >
             <FaChevronRight className="text-xl" />
@@ -71,14 +71,14 @@ const ReviewList = () => {
                 data-aos="fade-up"
               >
                 {/* Client Name and Rating */}
-                <span className="text-gray-600 text-lg mb-4 block font-medium">
+                <span className="text-gray-600 text-md mb-4 block font-medium text-nowrap">
                   Client: <span className="font-semibold text-black/90">{review.name}</span>
                 </span>
                 <div className="text-yellow-500 mb-4 mx-auto">
                   Rate: {renderStars(review.rating)}
                 </div>
                 {/* Review Text - Make it scrollable if it overflows */}
-                <div className="overflow-y-auto max-h-24 text-gray-800 mb-4 text-sm leading-relaxed flex-grow scrollbar-hidden px-5">
+                <div className="overflow-y-auto max-h-24 text-gray-800 mb-4 text-sm leading-relaxed flex-grow scrollbar-hidden pl-5 ">
                   Review: {review.text}
                 </div>
               </div>
