@@ -52,22 +52,19 @@ export default function Footer() {
           data-aos="fade-up"
           data-aos-delay="200"
         >
-          <p className="font-bold text-gray-300">Quick Links</p>
-          <Link to="/" className="hover:text-cyan-400 transition-colors text-sm">
-            Home
-          </Link>
-          <Link to="/about" className="hover:text-cyan-400 transition-colors text-sm">
-            About
-          </Link>
-          <Link to="/service" className="hover:text-cyan-400 transition-colors text-sm">
-            Service
-          </Link>
-          <Link to="/projects" className="hover:text-cyan-400 transition-colors text-sm">
-            Projects
-          </Link>
-          <Link to="/contact" className="hover:text-cyan-400 transition-colors text-sm">
-            Contact Us
-          </Link>
+          <h2 className="text-lg font-semibold text-gray-300">Contact Us</h2>
+          <div className="flex items-center justify-center sm:justify-start text-sm sm:gap-2">
+            <FaLocationDot className="text-yellow-500 self-start sm:self-center" />
+            <span>3C, Complex St, Finbarrs Road, Akoka Lagos</span>
+          </div>
+          <div className="flex items-center justify-center sm:justify-start text-sm gap-2">
+            <MdWhatsapp className="text-green-500" />
+            <span>+234 810 753 3654</span>
+          </div>
+          <div className="flex items-center justify-center sm:justify-start text-sm gap-2">
+            <FaPhone className="text-blue-500" />
+            <span>+234 810 753 3654</span>
+          </div>
         </div>
 
         {/* Customer Care & Info */}
@@ -97,7 +94,7 @@ export default function Footer() {
           data-aos="fade-up"
           data-aos-delay="600"
         >
-          <h2 className="text-lg font-semibold text-gray-300">Contact Us</h2>
+          {/* <h2 className="text-lg font-semibold text-gray-300">Contact Us</h2>
           <div className="flex items-center justify-center sm:justify-start text-sm sm:gap-2">
             <FaLocationDot className="text-yellow-500 self-start sm:self-center" />
             <span>3C, Complex St, Finbarrs Road, Akoka Lagos</span>
@@ -109,7 +106,7 @@ export default function Footer() {
           <div className="flex items-center justify-center sm:justify-start text-sm gap-2">
             <FaPhone className="text-blue-500" />
             <span>+234 810 753 3654</span>
-          </div>
+          </div> */}
 
           {/* Email Input */}
           <div className="text-xs font-medium text-gray-400">

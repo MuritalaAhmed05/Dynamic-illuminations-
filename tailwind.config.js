@@ -37,6 +37,11 @@ module.exports = {
         },
       },
     },
+    scrollbar: {
+      hidden: 'overflow: hidden',
+    },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar'),
+  ],
 }

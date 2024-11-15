@@ -13,6 +13,9 @@ import Training from './Training';
 import Faq from './Faq';
 // import Footer from './components/footer';
 import ScrollToTop from './components/ScrollToTop';
+import LeaveReview from './components/ReviewModal';
+// import SubmitReview from './submit-review';
+// import ReviewModal from './components/ReviewModal';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -28,6 +31,7 @@ root.render(
         <Route path="/contact" element={<Contact />} />
         <Route path="/training" element={<Training />} />
         <Route path="/faq" element={<Faq />} />
+        <Route path="/leave-review" element={<LeaveReview />}/>
       </Routes>
       <Footer/>
     </Router>

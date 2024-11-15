@@ -3,6 +3,7 @@ import AOS from "aos";
 import "aos/dist/aos.css"; // Import AOS CSS
 import MyCarousel from "./components/carousel";
 import { places } from "./components/data";
+// import ReviewList from "./components/ReviewList";
 import {
   FaLightbulb,
   FaCalendarAlt,
@@ -14,11 +15,13 @@ import {
   FaLock,
   FaPaintBrush,
   FaLeaf,
-  FaPhoneAlt,
-  FaEnvelope,
-  FaStar,
-  FaUsers,
+  // FaPhoneAlt,
+  // FaEnvelope,
+  // FaStar,
+  // FaUsers,
 } from "react-icons/fa";
+import ReviewList from "./components/ReviewList";
+// import ReviewModal from "./components/ReviewModal";
 
 function App() {
   useEffect(() => {
@@ -29,6 +32,7 @@ function App() {
     });
   }, []);
 
+ 
   return (
     <div className="bg-gray-50 text-gray-800">
       {/* Header Section */}
@@ -138,47 +142,13 @@ function App() {
       </section>
 
       {/* Testimonials Section */}
+      {/* Testimonials Section */}
       <section className="bg-blue-50 py-12 px-8">
         <h2 className="text-3xl font-bold text-center mb-8 text-blue-900" data-aos="fade-up">
           What Our Clients Say
         </h2>
-        <div className="flex flex-col md:flex-row justify-center gap-8">
-          {/* Testimonial 1 */}
-          <div className="bg-white p-6 rounded-lg shadow-md max-w-sm text-center hover:shadow-xl transition-all" data-aos="fade-up">
-            <FaStar className="text-yellow-500 text-4xl mb-4 mx-auto" />
-            <p>
-              "Dynamic Illuminations transformed our event into a spectacular experience with their lighting solutions!"
-            </p>
-            <span className="text-gray-600 mt-4 block">- Jane Doe, Event Planner</span>
-          </div>
-
-          {/* Testimonial 2 */}
-          <div className="bg-white p-6 rounded-lg shadow-md max-w-sm text-center hover:shadow-xl transition-all" data-aos="fade-up">
-            <FaUsers className="text-blue-500 text-4xl mb-4 mx-auto" />
-            <p>
-              "We automated our office lighting with their smart solutions, and the results are incredible!"
-            </p>
-            <span className="text-gray-600 mt-4 block">- John Smith, Office Manager</span>
-          </div>
-
-          {/* Testimonial 3 */}
-          <div className="bg-white p-6 rounded-lg shadow-md max-w-sm text-center hover:shadow-xl transition-all" data-aos="fade-up">
-            <FaLightbulb className="text-yellow-500 text-4xl mb-4 mx-auto" />
-            <p>
-              "The architectural lighting they designed for our building was beyond our expectations."
-            </p>
-            <span className="text-gray-600 mt-4 block">- Sarah Lee, Architect</span>
-          </div>
-
-          {/* Testimonial 4 */}
-          <div className="bg-white p-6 rounded-lg shadow-md max-w-sm text-center hover:shadow-xl transition-all" data-aos="fade-up">
-            <FaCamera className="text-red-500 text-4xl mb-4 mx-auto" />
-            <p>
-              "Their event lighting made our product launch look amazing. Highly recommended!"
-            </p>
-            <span className="text-gray-600 mt-4 block">- Michael Green, Marketing Manager</span>
-          </div>
-        </div>
+       
+       <ReviewList />
       </section>
     </div>
   );

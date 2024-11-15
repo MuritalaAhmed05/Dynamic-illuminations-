@@ -7,6 +7,12 @@
     src: url('../public/fonts/RobotoFlex-Regular.ttf');
   }
   
-/* .ill{
-  letter-spacing: 20px;
-} */
+/* Add this in your global CSS file (e.g., styles/globals.css) */
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none; /* for Internet Explorer */
+  scrollbar-width: none; /* for Firefox */
+}
