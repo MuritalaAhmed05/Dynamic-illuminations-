@@ -90,7 +90,7 @@ function LeaveReview() {
               onChange={(e) => setName(e.target.value)}
               placeholder="Your Name"
               className={`w-full p-2 border ${nameError ? 'border-red-500' : 'border-gray-300'} rounded`}
-              // required
+             
             />
             {nameError && <p className="text-red-600 text-sm mt-1">{nameError}</p>}
           </div>
@@ -102,7 +102,7 @@ function LeaveReview() {
               onChange={(e) => setReviewText(e.target.value)}
               placeholder="Your Review"
               className={`w-full p-2 border ${reviewError ? 'border-red-500' : 'border-gray-300'} rounded`}
-              // required
+             
             />
             {reviewError && <p className="text-red-600 text-sm mt-1">{reviewError}</p>}
           </div>

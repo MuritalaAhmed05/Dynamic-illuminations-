@@ -87,68 +87,73 @@ export default function Contact() {
           {/* Contact Form and Map Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <form
-              className="bg-white p-8 rounded-lg shadow-lg"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <p className="text-gray-700 text-center font-semibold">
-                "We'd love to hear from you! Whether you have questions,
-                feedback, or just want to say hello, send us a message and we'll
-                get back to you as soon as possible."
-              </p>
-              <div className="mb-6">
-                <label
-                  htmlFor="name"
-                  className="block text-left text-gray-700 font-semibold mb-2"
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  placeholder="Your Name"
-                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  required
-                />
-              </div>
-              <div className="mb-6">
-                <label
-                  htmlFor="email"
-                  className="block text-left text-gray-700 font-semibold mb-2"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="Your Email"
-                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  required
-                />
-              </div>
-              <div className="mb-6">
-                <label
-                  htmlFor="message"
-                  className="block text-left text-gray-700 font-semibold mb-2"
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  rows="5"
-                  placeholder="Your Message"
-                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  required
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-blue-800 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Send Message
-              </button>
-            </form>
+           {/* Contact Form */}
+<form
+  className="bg-white p-8 rounded-lg shadow-lg"
+  data-aos="fade-up"
+  data-aos-delay="200"
+  action="https://formspree.io/f/xnnqzaqw"
+  method="POST"
+>
+  <p className="text-gray-700 text-center font-semibold mb-6">
+    "We'd love to hear from you! Whether you have questions, feedback, or just want to say hello, send us a message and we'll get back to you as soon as possible."
+  </p>
+  <div className="mb-6">
+    <label
+      htmlFor="name"
+      className="block text-left text-gray-700 font-semibold mb-2"
+    >
+      Name
+    </label>
+    <input
+      type="text"
+      name="name"
+      id="name"
+      placeholder="Your Name"
+      className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+      required
+    />
+  </div>
+  <div className="mb-6">
+    <label
+      htmlFor="email"
+      className="block text-left text-gray-700 font-semibold mb-2"
+    >
+      Email
+    </label>
+    <input
+      type="email"
+      name="email"
+      id="email"
+      placeholder="Your Email"
+      className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+      required
+    />
+  </div>
+  <div className="mb-6">
+    <label
+      htmlFor="message"
+      className="block text-left text-gray-700 font-semibold mb-2"
+    >
+      Message
+    </label>
+    <textarea
+      name="message"
+      id="message"
+      rows="5"
+      placeholder="Your Message"
+      className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+      required
+    ></textarea>
+  </div>
+  <button
+    type="submit"
+    className="w-full bg-blue-800 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
+  >
+    Send Message
+  </button>
+</form>
+
 
             {/* Map Section with Embedded Google Map */}
             <div className="flex flex-col items-center justify-center w-full bg-gray-100 rounded-lg overflow-hidden shadow-lg">
