@@ -1,25 +1,28 @@
-import React, { useEffect } from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const trainingPrograms = [
   {
     id: 1,
-    title: 'Advanced Lighting Design',
-    description: 'Learn how to create dynamic lighting systems for commercial and residential spaces, covering the latest technologies and trends.',
-    image: '/images/traing3.jpg',
+    title: "Advanced Lighting Design",
+    description:
+      "Learn how to create dynamic lighting systems for commercial and residential spaces, covering the latest technologies and trends.",
+    image: "/images/traing3.jpg",
   },
   {
     id: 2,
-    title: 'Smart Automation in Lighting',
-    description: 'Master the integration of smart lighting solutions, including IoT, voice control, and energy efficiency techniques.',
-    image: '/images/traing5.jpg',
+    title: "Smart Automation in Lighting",
+    description:
+      "Master the integration of smart lighting solutions, including IoT, voice control, and energy efficiency techniques.",
+    image: "/images/traing5.jpg",
   },
   {
     id: 3,
-    title: 'Event Lighting Techniques',
-    description: 'Gain hands-on experience in designing and executing lighting setups for events, from concerts to corporate functions.',
-    image: '/images/training.jpg',
+    title: "Event Lighting Techniques",
+    description:
+      "Gain hands-on experience in designing and executing lighting setups for events, from concerts to corporate functions.",
+    image: "/images/training.jpg",
   },
 ];
 
@@ -33,7 +36,10 @@ export default function Training() {
     <div className="bg-gray-100 py-16 px-8">
       {/* Main Container */}
       <div className="max-w-6xl mx-auto text-center">
-        <h1 className="text-4xl font-bold text-blue-800 mb-12" data-aos="fade-up">
+        <h1
+          className="text-4xl font-bold text-blue-800 mb-12"
+          data-aos="fade-up"
+        >
           Our Training Programs
         </h1>
 
@@ -65,11 +71,18 @@ export default function Training() {
         {/* Call to Action */}
         <div className="mt-12" data-aos="fade-up" data-aos-delay="600">
           <p className="text-xl text-gray-800 mb-4">
-            Interested in enrolling? Reach out to us to sign up for one of our training programs!
+            Interested in enrolling? Reach out to us to sign up for one of our
+            training programs!
           </p>
-          <button className="bg-blue-800 text-white py-2 px-6 rounded hover:bg-blue-700 transition-colors">
-            Contact Us
-          </button>
+          <a
+            href="https://wa.me/2348107533654?text=Hello,%20I%20am%20interested%20in%20learning%20more%20about%20your%20training%20programs.%20Could%20you%20please%20provide%20additional%20details?"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <button className="bg-blue-800 text-white py-2 px-6 rounded hover:bg-blue-700 transition-colors">
+              Contact Us
+            </button>
+          </a>
         </div>
       </div>
     </div>

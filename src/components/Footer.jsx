@@ -24,7 +24,7 @@ export default function Footer() {
   return (
     <div className="bg-gray-900 text-gray-200">
       {/* Main Container */}
-      <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-8 px-8 py-7  mx-auto">
+      <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[5rem] sm:gap-8 px-8 py-7  mx-auto">
         {/* Logo & Social Links */}
         <div
           className="flex flex-col items-center sm:items-start"
@@ -39,11 +39,7 @@ export default function Footer() {
               Illuminations
             </span>
           </div>
-          <div className="flex gap-4 items-center justify-center sm:justify-start mt-4">
-            <FaInstagram className="hover:text-pink-500 transition-all text-3xl sm:text-2xl" />
-            <FaXTwitter className="hover:text-blue-400 transition-all text-3xl sm:text-2xl" />
-            <FaLinkedin className="hover:text-blue-600 transition-all text-3xl sm:text-2xl" />
-          </div>
+          
         </div>
 
         {/* Quick Links */}
@@ -86,6 +82,13 @@ export default function Footer() {
           <Link to="/" className="hover:text-gray-400 cursor-pointer">
             Terms of Service
           </Link>
+
+
+          <div className="flex gap-4 items-center justify-center sm:justify-start mt-4">
+            <FaInstagram className="hover:text-pink-500 transition-all text-3xl sm:text-2xl" />
+            <FaXTwitter className="hover:text-blue-400 transition-all text-3xl sm:text-2xl" />
+            <FaLinkedin className="hover:text-blue-600 transition-all text-3xl sm:text-2xl" />
+          </div>
         </div>
 
         {/* Newsletter Subscription */}

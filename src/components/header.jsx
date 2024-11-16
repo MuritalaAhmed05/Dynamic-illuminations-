@@ -53,14 +53,14 @@ export default function Header() {
 
         {/* Mobile Menu Button */}
         <button onClick={toggleMobileMenu} className="md:hidden text-gray-800">
-          {isMobileMenuOpen ? <AiOutlineClose size={30} /> : <AiOutlineMenu size={30} />}
+          {isMobileMenuOpen ? <AiOutlineClose size={30} /> : <AiOutlineMenu size={30} className='text-blue-800' />}
         </button>
       </div>
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-gray-800 bg-opacity-90 flex flex-col items-start p-6 text-white md:hidden"
+          className="fixed inset-0 bg-gray-800 bg-opacity-100 flex flex-col items-start p-6 text-white md:hidden"
           data-aos="fade-left"
           data-aos-anchor="body"
         >

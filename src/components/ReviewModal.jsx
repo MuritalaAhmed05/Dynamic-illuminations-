@@ -36,7 +36,7 @@ function LeaveReview() {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div className="bg-gray-100 min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
         <h2 className="text-2xl font-bold mb-4">Leave a Review</h2>
         <form onSubmit={handleSubmit}>
