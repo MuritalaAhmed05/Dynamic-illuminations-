@@ -93,8 +93,22 @@ export default function Footer() {
 >
               <FaInstagram className="hover:text-pink-500 transition-all text-3xl sm:text-2xl" />
             </a>
-            <FaXTwitter className="hover:text-black transition-all text-3xl sm:text-2xl" />
-            <FaLinkedin className="hover:text-blue-600 transition-all text-3xl sm:text-2xl" />
+          <a
+  href="https://www.instagram.com/dynamic_illuminations/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="relative z-10"
+>
+              <FaXTwitter className="hover:text-black transition-all text-3xl sm:text-2xl" />
+            </a>
+          <a
+  href="https://www.instagram.com/dynamic_illuminations/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="relative z-10"
+>
+              <FaLinkedin className="hover:text-blue-600 transition-all text-3xl sm:text-2xl" />
+            </a>
           </div>
         </div>
 
