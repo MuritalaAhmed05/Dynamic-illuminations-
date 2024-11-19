@@ -85,7 +85,14 @@ export default function Footer() {
 
 
           <div className="flex gap-4 items-center justify-center sm:justify-start mt-4">
-            <FaInstagram className="hover:text-pink-500 transition-all text-3xl sm:text-2xl" />
+          <a
+  href="https://www.instagram.com/dynamic_illuminations/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="relative z-10"
+>
+              <FaInstagram className="hover:text-pink-500 transition-all text-3xl sm:text-2xl" />
+            </a>
             <FaXTwitter className="hover:text-black transition-all text-3xl sm:text-2xl" />
             <FaLinkedin className="hover:text-blue-600 transition-all text-3xl sm:text-2xl" />
           </div>
