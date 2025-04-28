@@ -12,7 +12,6 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 export default function Footer() {
-  // Initialize AOS animations
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -23,9 +22,7 @@ export default function Footer() {
 
   return (
     <div className="bg-gray-900 text-gray-200">
-      {/* Main Container */}
       <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-[5rem] sm:gap-8 px-8 py-7  mx-auto">
-        {/* Logo & Social Links */}
         <div
           className="flex flex-col items-center sm:items-start"
           data-aos="fade-up"
@@ -42,7 +39,6 @@ export default function Footer() {
           
         </div>
 
-        {/* Quick Links */}
         <div
           className="flex flex-col space-y-3 justify-start text-center sm:text-left"
           data-aos="fade-up"
@@ -63,7 +59,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Customer Care & Info */}
         <div
           className="space-y-3 text-sm text-center sm:text-left flex flex-col justify-start"
           data-aos="fade-up"
@@ -112,7 +107,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Newsletter Subscription */}
         <div
           className="space-y-4 text-center sm:text-left"
           data-aos="fade-up"
@@ -140,7 +134,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Footer Bottom */}
       <footer
         className="bg-gray-950 text-gray-500 py-4 text-center"
         data-aos="fade-up"

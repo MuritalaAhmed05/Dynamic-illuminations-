@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
 import { db } from '../firebase';
 import { addDoc, collection } from 'firebase/firestore';
-
+import { Helmet } from 'react-helmet';
 function LeaveReview() {
   const [name, setName] = useState('');
   const [reviewText, setReviewText] = useState('');
@@ -67,6 +67,10 @@ function LeaveReview() {
 
   return (
     <div className="bg-gray-100 min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center">
+         <Helmet>
+        <title>Leave a Review | Dynamic Illuminations</title>
+        <meta name="description" content="Leave a review and let us know how we did with your lighting project." />
+      </Helmet>
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
         <h2 className="text-2xl font-bold mb-4">Leave a Review</h2>
 

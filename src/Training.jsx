@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-
+import { Helmet } from 'react-helmet';
 const trainingPrograms = [
   {
     id: 1,
@@ -27,14 +27,16 @@ const trainingPrograms = [
 ];
 
 export default function Training() {
-  // Initialize AOS
   useEffect(() => {
-    AOS.init({ duration: 1000 }); // You can customize the duration and delay
+    AOS.init({ duration: 1000 }); 
   }, []);
 
   return (
     <div className="bg-gray-100 py-16 px-8">
-      {/* Main Container */}
+  <Helmet>
+        <title>Lighting Training | Dynamic Illuminations</title>
+        <meta name="description" content="Join our training sessions to learn about advanced lighting solutions." />
+      </Helmet>
       <div className="max-w-6xl mx-auto text-center">
         <h1
           className="text-4xl font-bold text-blue-800 mb-12"
@@ -43,14 +45,13 @@ export default function Training() {
           Our Training Programs
         </h1>
 
-        {/* Training Programs Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           {trainingPrograms.map((program) => (
             <div
               key={program.id}
               className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
               data-aos="fade-up"
-              data-aos-delay={`${program.id * 200}`} // Add staggered delay for animations
+              data-aos-delay={`${program.id * 200}`}
             >
               <img
                 src={program.image}
@@ -68,7 +69,6 @@ export default function Training() {
           ))}
         </div>
 
-        {/* Call to Action */}
         <div className="mt-12" data-aos="fade-up" data-aos-delay="600">
           <p className="text-xl text-gray-800 mb-4">
             Interested in enrolling? Reach out to us to sign up for one of our

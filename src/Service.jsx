@@ -15,7 +15,7 @@ import {
 } from 'react-icons/fa';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
+import { Helmet } from 'react-helmet';
 export default function Service() {
   useEffect(() => {
     AOS.init({ duration: 1000 });
@@ -62,7 +62,7 @@ export default function Service() {
       title: 'Lighting for Public Spaces',
       description: 'Designing safe, functional, and aesthetically pleasing lighting for parks, streets, and more.',
     },
-    // New Services
+    
     {
       icon: <FaCamera className="text-blue-800 text-4xl mb-4" />,
       title: 'CCTV Installation',
@@ -87,11 +87,13 @@ export default function Service() {
 
   return (
     <div className="bg-gray-100 py-16 px-8">
-      {/* Main Container */}
+     <Helmet>
+        <title>Our Services | Dynamic Illuminations</title>
+        <meta name="description" content="Explore our range of lighting services, designed to bring elegance and functionality to any space." />
+      </Helmet>
       <div className="max-w-6xl mx-auto text-center">
         <h1 className="text-4xl font-bold text-blue-800 mb-2">Our Services</h1>
 
-        {/* Introduction Paragraph */}
         <p className="text-lg text-gray-700 mb-12">
           We are dedicated to bringing light into every aspect of your life, whether you're enhancing your home,
           business, or event. Our services are designed to provide you with the highest quality lighting solutions
@@ -99,14 +101,13 @@ export default function Service() {
           diverse range of services and find the perfect solution for your needs.
         </p>
 
-        {/* Services Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
           {services.map((service, index) => (
             <div
               key={index}
               className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
-              data-aos="fade-up" // AOS Animation
-              data-aos-delay={index * 100} // Delay based on index
+              data-aos="fade-up" 
+              data-aos-delay={index * 100} 
               aria-labelledby={`service-${index}-title`}
             >
               <div aria-label={service.title}>{service.icon}</div>

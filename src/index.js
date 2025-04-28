@@ -11,11 +11,9 @@ import Header from './components/header';
 import Footer from './components/Footer';
 import Training from './Training';
 import Faq from './Faq';
-// import Footer from './components/footer';
 import ScrollToTop from './components/ScrollToTop';
 import LeaveReview from './components/ReviewModal';
-// import SubmitReview from './submit-review';
-// import ReviewModal from './components/ReviewModal';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

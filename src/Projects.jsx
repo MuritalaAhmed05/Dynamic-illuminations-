@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import 'aos/dist/aos.css'; // Import AOS styles
-import AOS from 'aos'; // Import AOS JS
+import 'aos/dist/aos.css'; 
+import AOS from 'aos'; 
 
 const projects = [
   {
@@ -32,30 +32,29 @@ const projects = [
 export default function Projects() {
   useEffect(() => {
     AOS.init({
-      duration: 1000, // Duration of the animation (ms)
-      once: true, // Animation will only happen once
+      duration: 1000, 
+      once: true, 
     });
   }, []);
 
   return (
     <div className="bg-gray-100 py-16 px-8">
-      {/* Main Container */}
+ 
       <div className="max-w-6xl mx-auto text-center">
         <h1 className="text-4xl font-bold text-blue-800 mb-12">Our Projects</h1>
 
-        {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           {projects.map((project) => (
             <div
               key={project.id}
               className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-              data-aos="fade-up" // Adding AOS effect for this project
+              data-aos="fade-up" 
             >
               <img
                 src={project.image}
                 alt={project.title}
                 className="w-full h-48 object-cover"
-                onError={(e) => e.target.src = '/path/to/fallback-image.jpg'} // Fallback image
+                onError={(e) => e.target.src = '/path/to/fallback-image.jpg'} 
               />
               <div className="p-6">
                 <h2 className="text-2xl font-semibold mb-4">{project.title}</h2>

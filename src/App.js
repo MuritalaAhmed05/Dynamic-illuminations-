@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
-import "aos/dist/aos.css"; // Import AOS CSS
+import "aos/dist/aos.css"; 
 import MyCarousel from "./components/carousel";
 import { places } from "./components/data";
-// import ReviewList from "./components/ReviewList";
+import { Helmet } from 'react-helmet';
+
 import {
   FaLightbulb,
   FaCalendarAlt,
@@ -15,27 +16,30 @@ import {
   FaLock,
   FaPaintBrush,
   FaLeaf,
-  // FaPhoneAlt,
-  // FaEnvelope,
-  // FaStar,
-  // FaUsers,
+  
+  
+  
+  
 } from "react-icons/fa";
 import ReviewList from "./components/ReviewList";
-// import ReviewModal from "./components/ReviewModal";
+
 
 function App() {
   useEffect(() => {
     AOS.init({
-      duration: 1000, // Animation duration in ms
-      easing: "ease-in-out", // Easing function
-      once: true, // Animation happens only once
+      duration: 1000, 
+      easing: "ease-in-out", 
+      once: true, 
     });
   }, []);
 
  
   return (
     <div className="bg-gray-50 text-gray-800">
-      {/* Header Section */}
+      <Helmet>
+        <title>Home | Dynamic Illuminations</title>
+        <meta name="description" content="Welcome to Dynamic Illuminations. Explore our expert lighting services and projects." />
+      </Helmet>
       <header className="bg-blue-900 text-white py-6 px-8 text-center shadow-lg">
         <h1 className="text-4xl font-bold" data-aos="fade-down">
           Welcome to Dynamic Illuminations
@@ -45,18 +49,15 @@ function App() {
         </p>
       </header>
 
-      {/* Carousel Section */}
       <section>
         <MyCarousel images={places} />
       </section>
 
-      {/* Services Section */}
       <section className="py-12 px-8 bg-white">
         <h2 className="text-3xl font-bold text-center mb-8 text-blue-900" data-aos="fade-up">
           Our Key Services
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {/* Service Cards */}
           <div className="bg-blue-50 p-6 rounded-lg shadow-md text-center hover:shadow-xl transition-all" data-aos="zoom-in">
             <FaLightbulb className="text-4xl text-yellow-500 mb-4" />
             <h3 className="text-xl font-semibold text-blue-900">Architectural Lighting</h3>
@@ -141,8 +142,6 @@ function App() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      {/* Testimonials Section */}
       <section className="bg-blue-50 py-12 px-8">
         <h2 className="text-3xl font-bold text-center mb-8 text-blue-900" data-aos="fade-up">
           What Our Clients Say

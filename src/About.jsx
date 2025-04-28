@@ -1,22 +1,25 @@
 import React, { useEffect } from 'react';
 import AOS from 'aos';
-import 'aos/dist/aos.css'; // Import AOS styles
+import 'aos/dist/aos.css'; 
+import { Helmet } from 'react-helmet';
 
 export default function About() {
   useEffect(() => {
     AOS.init({
-      duration: 1000, // Duration of the animation
-      easing: 'ease-in-out', // Easing function for the animation
-      once: true, // Whether the animation should trigger once or repeat
+      duration: 1000, 
+      easing: 'ease-in-out', 
+      once: true, 
     });
   }, []);
 
   return (
     <div className="bg-gray-100 py-16 px-8">
-      {/* Main Container */}
+      <Helmet>
+        <title>About Us | Dynamic Illuminations</title>
+        <meta name="description" content="Learn more about Dynamic Illuminations, a company providing expert lighting solutions." />
+      </Helmet>
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8">
         
-        {/* First Story */}
         <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left" data-aos="fade-up">
           <img
             src="/images/image11.jpg"
@@ -31,7 +34,6 @@ export default function About() {
           </div>
         </div>
 
-        {/* Second Story */}
         <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left" data-aos="fade-up" data-aos-delay="100">
           <img
             src="/images/panel3.jpg"
@@ -46,7 +48,6 @@ export default function About() {
           </div>
         </div>
 
-        {/* Third Story */}
         <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left" data-aos="fade-up" data-aos-delay="200">
           <img
             src="/images/battery1.jpg"
@@ -61,7 +62,6 @@ export default function About() {
           </div>
         </div>
 
-        {/* Fourth Story */}
         <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left" data-aos="fade-up" data-aos-delay="300">
           <img
             src="/images/inverters.jpg"
@@ -76,7 +76,6 @@ export default function About() {
           </div>
         </div>
 
-        {/* Fifth Story */}
         <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left" data-aos="fade-up" data-aos-delay="400">
           <img
             src="/images/simple.jpg"
@@ -91,7 +90,6 @@ export default function About() {
           </div>
         </div>
 
-        {/* Sixth Story */}
         <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left" data-aos="fade-up" data-aos-delay="500">
           <img
             src="/images/panel7.jpg"
@@ -120,7 +118,6 @@ export default function About() {
           </div>
         </div>
 
-        {/* Seventh Story */}
         <div className="flex flex-col items-center sm:flex-row md:flex-row lg:flex-row text-center sm:text-left md:text-left lg:text-left" data-aos="fade-up" data-aos-delay="700">
           <img
             src="/images/traing3.jpg"

@@ -3,13 +3,13 @@ import { FaLightbulb } from 'react-icons/fa';
 const MyCarousel = ({ images }) => {
   const [current, setCurrent] = useState(0);
 
-  // Automatically slide to the next image every 3 seconds
+  
   useEffect(() => {
     const interval = setInterval(() => {
       slideRight();
     }, 3000);
 
-    // Clear the interval when the component is unmounted
+    
     return () => clearInterval(interval);
   }, [current]);
 
@@ -50,14 +50,12 @@ const MyCarousel = ({ images }) => {
 
           </div>
         ))}
-        {/* Left Arrow */}
         <div
           className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-gainsboro flex justify-center items-center cursor-pointer text-3xl w-10 h-10 rounded-full"
           onClick={slideLeft}
         >
           &lsaquo;
         </div>
-        {/* Right Arrow */}
         <div
           className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-gainsboro flex justify-center items-center cursor-pointer text-3xl w-10 h-10 rounded-full"
           onClick={slideRight}

@@ -7,7 +7,6 @@ import 'aos/dist/aos.css';
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Initialize AOS on mount
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -20,13 +19,11 @@ export default function Header() {
 
   return (
     <div className="sticky top-0 z-50 bg-white shadow-lg">
-      {/* Header container */}
       <div
         className="flex justify-between items-center px-8 py-4 will-change-transform"
         data-aos="fade-down"
         data-aos-anchor="body"
       >
-        {/* Logo */}
         <Link to="/" className="flex items-center space-x-3">
           <img
             src="/images/dynamicslogo1.jpg"
@@ -41,7 +38,6 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
         <div className="hidden md:flex gap-7 items-center font-semibold">
           <Link to="/" className="hover:text-blue-600">Home</Link>
           <Link to="/about" className="hover:text-blue-600">About</Link>
@@ -51,13 +47,11 @@ export default function Header() {
           <Link to="/training" className="hover:text-blue-600">Training</Link>
         </div>
 
-        {/* Mobile Menu Button */}
         <button onClick={toggleMobileMenu} className="md:hidden text-gray-800">
           {isMobileMenuOpen ? <AiOutlineClose size={30} /> : <AiOutlineMenu size={30} className='text-blue-800' />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div
           className="fixed inset-0 bg-gray-800 bg-opacity-100 flex flex-col items-start p-6 text-white md:hidden"

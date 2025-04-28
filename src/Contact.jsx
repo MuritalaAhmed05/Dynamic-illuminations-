@@ -2,34 +2,32 @@ import React, { useEffect } from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
-
+import { Helmet } from 'react-helmet';
 export default function Contact() {
-  // Initialize AOS
   useEffect(() => {
-    AOS.init({ duration: 1000 }); // Customize the animation duration as needed
+    AOS.init({ duration: 1000 }); 
   }, []);
 
   return (
     <div>
-      {/* Hero Section */}
+   <Helmet>
+        <title>Contact Us | Dynamic Illuminations</title>
+        <meta name="description" content="Get in touch with us for all your lighting needs and inquiries." />
+      </Helmet>
       <div className="relative w-full h-[500px] overflow-hidden">
-        {/* Darkened and Blurred Background Image */}
         <img
           src="/images/panel7.jpg"
           alt="panel"
           className="w-full h-full object-cover shadow-lg filter brightness-50 blur-sm"
         />
 
-        {/* Centered Text Overlay */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white p-6 bg-opacity-70 rounded-xl shadow-2xl max-w-3xl mx-auto">
-          {/* Title */}
           <h2
             className="font-bold text-4xl leading-tight mb-4 text-shadow-lg"
             data-aos="fade-up"
           >
             Contact Us
           </h2>
-          {/* Small Speech Sentence */}
           <p
             className="text-lg sm:text-xl md:text-2xl font-medium max-w-md"
             data-aos="fade-up"
@@ -40,10 +38,8 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="bg-gray-100 py-16 px-8">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Contact Icons Section */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <div
               className="shadow-lg flex flex-col items-center p-6 bg-white rounded-lg"
@@ -84,10 +80,7 @@ export default function Contact() {
             Get in Touch
           </h1>
 
-          {/* Contact Form and Map Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* Contact Form */}
-           {/* Contact Form */}
 <form
   className="bg-white p-8 rounded-lg shadow-lg"
   data-aos="fade-up"
@@ -155,7 +148,6 @@ export default function Contact() {
 </form>
 
 
-            {/* Map Section with Embedded Google Map */}
             <div className="flex flex-col items-center justify-center w-full bg-gray-100 rounded-lg overflow-hidden shadow-lg">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.97634263081!2d3.3829417738266323!3d6.524671223152128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8d020bb422d1%3A0xcd6f6a180ec6098!2s3C%20Complex!5e0!3m2!1sen!2sng!4v1731166428810!5m2!1sen!2sng"
@@ -173,9 +165,7 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* Slanted Image and Quick Contact Section */}
       <div className="hidden sm:flex w-full h-auto md:h-[150px] bg-blue-700">
-        {/* Slanted Image */}
         <div
           className="w-full md:w-1/3 h-auto md:h-full overflow-hidden relative"
           style={{ clipPath: "polygon(0 0, 100% 0%, 80% 100%, 0% 100%)" }}
@@ -187,9 +177,7 @@ export default function Contact() {
           />
         </div>
 
-        {/* Slanted Contact Info */}
         <div className="w-full md:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Left Section */}
           <div className="text-white flex flex-col items-start justify-center pl-6 md:pl-8 pr-4 py-6 md:py-8 h-full relative rounded-lg">
             <p className="text-sm md:text-base font-medium mb-2">
               We're here for you!
@@ -199,7 +187,6 @@ export default function Contact() {
             </h1>
           </div>
 
-          {/* Right Section */}
           <div className="flex items-center justify-start p-2 md:p-4">
             <a
               href="https://wa.me/2348107533654?text=Hello,%20I%20would%20like%20to%20inquire%20about%20your%20services%20at%20Dynamic%20Illuminations.%20Could%20you%20please%20provide%20more%20details?"

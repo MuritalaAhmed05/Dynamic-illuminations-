@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
+import { Helmet } from 'react-helmet';
 const faqs = [
   {
     question: "What is dynamic illumination?",
@@ -37,6 +37,10 @@ export default function Faq() {
 
   return (
     <div className="max-w-4xl mx-auto my-20 p-8 bg-gray-100 rounded-xl shadow-xl">
+        <Helmet>
+        <title>FAQ | Dynamic Illuminations</title>
+        <meta name="description" content="Find answers to frequently asked questions about our lighting services." />
+      </Helmet>
       <h2
         className="text-4xl font-bold text-center mb-12 text-blue-900"
         data-aos="fade-down"
