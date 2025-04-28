@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import 'aos/dist/aos.css'; 
 import AOS from 'aos'; 
-
+import { Helmet } from 'react-helmet';
 const projects = [
   {
     id: 1,
@@ -39,7 +39,10 @@ export default function Projects() {
 
   return (
     <div className="bg-gray-100 py-16 px-8">
- 
+  <Helmet>
+        <title>Our Projects | Dynamic Illuminations</title>
+        <meta name="description" content="Check out some of our amazing lighting projects that have transformed spaces." />
+      </Helmet>
       <div className="max-w-6xl mx-auto text-center">
         <h1 className="text-4xl font-bold text-blue-800 mb-12">Our Projects</h1>
 
