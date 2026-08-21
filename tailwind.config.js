@@ -1,44 +1,44 @@
-// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-    "./app/**/*.{js,ts,jsx,tsx}",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Roboto', 'sans-serif'],
+        sans: ['Inter', 'Roboto', 'sans-serif'],
         roboto: ['RobotoFlex-Regular', 'sans-serif'],
       },
       colors: {
-        // Primary Blue Palette
+        brand: {
+          blue: '#004B84',
+          navy: '#0A192F',
+          dark: '#030712',
+          light: '#F8FAFC',
+          gold: '#F59E0B',
+          cyan: '#06B6D4',
+          accent: '#38BDF8',
+        },
         primary: {
-          DEFAULT: '#1E3A8A', // Main primary blue
-          light: '#3B82F6',   // Lighter blue for buttons/hover
-          dark: '#1E40AF',    // Darker blue for headers/footers
-          soft: '#93C5FD',    // Soft blue for backgrounds/highlights
-        },
-        // Complementary & Supporting Colors
-        accent: '#FACC15',    // Yellow for CTA buttons
-        secondary: '#14B8A6', // Teal for highlights
-        neutral: {
-          dark: '#1F2937',   // Dark gray for text/icons
-          light: '#E5E7EB',  // Light gray for borders/backgrounds
-        },
-        // Background Colors
-        background: {
-          light: '#F3F4F6',  // Light background
-          dark: '#0F172A',   // Dark background (dark mode)
-        },
-        letterSpacing: {
-          'extra-wide': '0.5em',  // Example of custom letter spacing
+          DEFAULT: '#004B84',
+          light: '#0284C7',
+          dark: '#075985',
+          soft: '#E0F2FE',
         },
       },
-    },
-    scrollbar: {
-      hidden: 'overflow: hidden',
+      boxShadow: {
+        'glow-blue': '0 0 25px -5px rgba(2, 132, 199, 0.4)',
+        'glow-gold': '0 0 25px -5px rgba(245, 158, 11, 0.4)',
+        'glow-cyan': '0 0 25px -5px rgba(6, 182, 212, 0.4)',
+        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'hero-pattern': 'radial-gradient(circle at 50% 0%, rgba(2, 132, 199, 0.15), transparent 70%)',
+      },
     },
   },
   plugins: [
