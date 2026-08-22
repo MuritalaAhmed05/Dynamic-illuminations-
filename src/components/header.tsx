@@ -88,7 +88,7 @@ export default function Header() {
                     href={link.href}
                     className={`flex items-center space-x-1.5 px-4 py-2 rounded-full transition-all duration-300 font-semibold text-xs uppercase tracking-wider ${
                       isActive
-                        ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-glow-gold'
+                        ? 'bg-amber-500 text-slate-950 shadow-md font-extrabold'
                         : 'bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 border border-amber-500/30'
                     }`}
                   >
@@ -119,7 +119,7 @@ export default function Header() {
               href="https://wa.me/2348107533654?text=Hello%20Dynamic%20Illuminations!%20I%20would%20like%20to%20get%20a%20free%20quote."
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-glow-blue transform hover:-translate-y-0.5"
+              className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-md transform hover:-translate-y-0.5"
             >
               <FaWhatsapp className="text-emerald-400 text-lg" />
               <span>Get Free Quote</span>
@@ -189,7 +189,7 @@ export default function Header() {
               href="https://wa.me/2348107533654?text=Hello%20Dynamic%20Illuminations!%20I%20would%20like%20to%20get%20a%20free%20quote."
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold py-3.5 rounded-xl shadow-glow-gold"
+              className="w-full flex items-center justify-center space-x-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3.5 rounded-xl shadow-md"
             >
               <FaWhatsapp className="text-xl" />
               <span>Request Quote on WhatsApp</span>

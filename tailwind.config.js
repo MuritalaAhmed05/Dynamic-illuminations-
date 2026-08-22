@@ -30,9 +30,9 @@ module.exports = {
         },
       },
       boxShadow: {
-        'glow-blue': '0 0 25px -5px rgba(2, 132, 199, 0.4)',
-        'glow-gold': '0 0 25px -5px rgba(245, 158, 11, 0.4)',
-        'glow-cyan': '0 0 25px -5px rgba(6, 182, 212, 0.4)',
+        'glow-blue': '0 4px 14px rgba(0, 0, 0, 0.25)',
+        'glow-gold': '0 4px 14px rgba(0, 0, 0, 0.25)',
+        'glow-cyan': '0 4px 14px rgba(0, 0, 0, 0.25)',
         'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
       },
       backgroundImage: {

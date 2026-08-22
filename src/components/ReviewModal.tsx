@@ -127,7 +127,7 @@ function LeaveReview() {
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-extrabold py-4 rounded-xl shadow-glow-gold transition-all disabled:opacity-50 text-base"
+            className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-4 rounded-xl shadow-md transition-all disabled:opacity-50 text-base"
             disabled={isSubmitting}
           >
             {isSubmitting ? 'Submitting Review...' : 'Submit Review'}

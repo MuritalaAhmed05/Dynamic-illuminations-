@@ -65,7 +65,7 @@ export default function HomeClient() {
         <div className="absolute top-40 right-10 w-96 h-96 bg-amber-500/10 rounded-full filter blur-[120px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10 text-center">
-          <div data-aos="fade-down" className="inline-flex items-center space-x-2 bg-slate-900 border border-slate-800 text-amber-400 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider mb-6 shadow-glow-gold">
+          <div data-aos="fade-down" className="inline-flex items-center space-x-2 bg-slate-900 border border-slate-800 text-amber-400 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider mb-6 shadow-md">
             <FaAward className="text-amber-400" />
             <span>Nigeria&apos;s Premier Solar & Architectural Lighting Engineers</span>
           </div>
@@ -81,7 +81,7 @@ export default function HomeClient() {
           <div data-aos="fade-up" data-aos-delay="200" className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/calculator"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-8 py-4 rounded-2xl shadow-glow-gold text-base transition-all transform hover:scale-105"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-8 py-4 rounded-2xl shadow-md text-base transition-all transform hover:scale-105"
             >
               <FaCalculator className="text-xl" />
               <span>Solar & ROI Savings Calculator</span>
@@ -135,10 +135,7 @@ export default function HomeClient() {
 
       {/* Solar & Diesel ROI Calculator Highlight Banner */}
       <section className="py-16 px-6 md:px-8 max-w-7xl mx-auto">
-        <div className="bg-gradient-to-r from-blue-950 via-slate-900 to-amber-950/60 border border-amber-500/40 rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8" data-aos="zoom-in">
-          {/* Ambient Glow */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full filter blur-3xl pointer-events-none" />
-
+        <div className="bg-slate-900 border border-amber-500/30 rounded-3xl p-8 sm:p-12 shadow-xl relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8" data-aos="zoom-in">
           <div className="max-w-2xl text-left space-y-3">
             <div className="inline-flex items-center space-x-2 text-amber-400 font-bold text-xs uppercase tracking-wider">
               <FaGasPump className="text-base" />
@@ -155,7 +152,7 @@ export default function HomeClient() {
           <div className="flex-shrink-0 flex flex-col sm:flex-row gap-3">
             <Link
               href="/calculator"
-              className="inline-flex items-center justify-center space-x-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-extrabold px-8 py-4 rounded-2xl shadow-glow-gold text-base transition-all transform hover:scale-105"
+              className="inline-flex items-center justify-center space-x-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-8 py-4 rounded-2xl shadow-md text-base transition-all transform hover:scale-105"
             >
               <FaPiggyBank className="text-xl" />
               <span>Calculate My Diesel Savings</span>

@@ -140,7 +140,7 @@ export default function Footer() {
             />
             <button
               type="submit"
-              className="bg-gradient-to-r from-blue-900 to-blue-700 text-white text-sm font-semibold py-2.5 rounded-lg hover:from-blue-800 hover:to-blue-600 transition-all shadow-md"
+              className="bg-blue-700 hover:bg-blue-600 text-white text-sm font-semibold py-2.5 rounded-lg transition-colors shadow-md"
             >
               Subscribe Now
             </button>

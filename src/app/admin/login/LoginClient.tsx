@@ -75,7 +75,7 @@ export default function LoginClient() {
 
       <div className="glass-dark p-8 sm:p-10 rounded-3xl border border-slate-800 shadow-2xl w-full max-w-md relative z-10" data-aos="zoom-in">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow-gold">
+          <div className="w-16 h-16 bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md">
             <FaShieldAlt className="text-2xl" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Admin Portal Login</h1>
@@ -116,7 +116,7 @@ export default function LoginClient() {
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-4 rounded-xl shadow-glow-gold transition-all flex items-center justify-center space-x-2 text-base"
+              className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-4 rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 text-base"
             >
               <span>Access Admin Dashboard</span>
               <FaArrowRight className="text-sm" />
@@ -172,7 +172,7 @@ export default function LoginClient() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-extrabold py-4 rounded-xl shadow-glow-blue transition-all flex items-center justify-center space-x-2 text-base disabled:opacity-50"
+              className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 text-base disabled:opacity-50"
             >
               <span>{isSubmitting ? 'Authenticating...' : 'Sign In'}</span>
               <FaArrowRight className="text-sm" />

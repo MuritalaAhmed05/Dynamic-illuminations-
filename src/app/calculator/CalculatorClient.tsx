@@ -235,7 +235,7 @@ export default function CalculatorClient() {
               onClick={() => setActiveCalculatorTab('appliance')}
               className={`px-5 py-3 rounded-xl text-xs sm:text-sm font-extrabold flex items-center space-x-2 transition-all ${
                 activeCalculatorTab === 'appliance'
-                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-glow-gold scale-102'
+                  ? 'bg-amber-500 text-slate-950 shadow-md'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -247,7 +247,7 @@ export default function CalculatorClient() {
               onClick={() => setActiveCalculatorTab('roi')}
               className={`px-5 py-3 rounded-xl text-xs sm:text-sm font-extrabold flex items-center space-x-2 transition-all ${
                 activeCalculatorTab === 'roi'
-                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-glow-gold scale-102'
+                  ? 'bg-amber-500 text-slate-950 shadow-md'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -269,7 +269,7 @@ export default function CalculatorClient() {
           <div className="space-y-12">
             {/* Header */}
             <div className="text-center max-w-3xl mx-auto space-y-3" data-aos="fade-down">
-              <div className="inline-flex items-center space-x-2 bg-slate-900 border border-slate-800 text-amber-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-glow-gold">
+              <div className="inline-flex items-center space-x-2 bg-slate-900 border border-slate-800 text-amber-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-md">
                 <FaBolt />
                 <span>Customizable Energy Load Estimator</span>
               </div>
@@ -282,9 +282,9 @@ export default function CalculatorClient() {
             </div>
 
             {/* ENGINEERING CONSULTATION NOTICE */}
-            <div className="glass-dark p-6 sm:p-8 rounded-3xl border border-amber-500/30 shadow-2xl relative overflow-hidden bg-gradient-to-r from-amber-950/20 via-slate-900 to-blue-950/20" data-aos="fade-up">
+            <div className="glass-dark p-6 sm:p-8 rounded-3xl border border-amber-500/30 shadow-2xl relative overflow-hidden bg-slate-900" data-aos="fade-up">
               <div className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-5">
-                <div className="w-14 h-14 bg-amber-500/20 text-amber-400 rounded-2xl border border-amber-500/40 flex items-center justify-center flex-shrink-0 shadow-glow-gold">
+                <div className="w-14 h-14 bg-amber-500/20 text-amber-400 rounded-2xl border border-amber-500/40 flex items-center justify-center flex-shrink-0 shadow-md">
                   <FaUserShield className="text-2xl" />
                 </div>
 
@@ -301,7 +301,7 @@ export default function CalculatorClient() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-shrink-0 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-5 py-3 rounded-xl text-xs sm:text-sm shadow-glow-gold transition-all"
+                  className="flex-shrink-0 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-3 rounded-xl text-xs sm:text-sm shadow-md transition-all"
                 >
                   Consult Engineer Now
                 </a>
@@ -336,7 +336,7 @@ export default function CalculatorClient() {
                           onClick={() => setSelectedCategoryFilter(cat)}
                           className={`px-3 py-1.5 rounded-xl text-[11px] font-bold transition-all ${
                             selectedCategoryFilter === cat
-                              ? 'bg-amber-500 text-slate-950 shadow-glow-gold'
+                              ? 'bg-amber-500 text-slate-950 shadow-md'
                               : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
                           }`}
                         >
@@ -391,7 +391,7 @@ export default function CalculatorClient() {
                       />
                       <button
                         type="submit"
-                        className="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-xs p-3 rounded-xl shadow-glow-gold hover:from-amber-400 hover:to-amber-500 transition-all flex items-center justify-center space-x-1"
+                        className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs p-3 rounded-xl shadow-md transition-all flex items-center justify-center space-x-1"
                       >
                         <FaPlus />
                         <span>Add Appliance</span>
@@ -498,9 +498,7 @@ export default function CalculatorClient() {
                 </div>
 
                 {/* Sizing Results Card */}
-                <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-950 p-6 sm:p-8 rounded-3xl border border-blue-900/50 shadow-2xl space-y-5 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full filter blur-2xl pointer-events-none" />
-
+                <div className="bg-slate-900 p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-xl space-y-5 relative overflow-hidden">
                   <h3 className="text-lg font-bold text-white border-b border-slate-800 pb-3 flex items-center space-x-2">
                     <FaMicrochip className="text-amber-400" />
                     <span>Recommended System Sizing</span>
@@ -567,12 +565,23 @@ export default function CalculatorClient() {
                     </div>
                   </div>
 
+                  {/* Engineering & Budget Notice Note */}
+                  <div className="p-3.5 bg-slate-950/90 border border-amber-500/30 rounded-2xl text-[11px] text-slate-300 flex items-start space-x-2.5">
+                    <FaUserShield className="text-amber-400 text-base flex-shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-amber-400 font-bold block mb-0.5">Engineering & Budget Notice</strong>
+                      <p className="leading-relaxed text-slate-400">
+                        This calculation provides an interactive technical estimate. Final inverter sizing, battery configuration, and exact quotation are determined after a free engineering consultation based on your budget.
+                      </p>
+                    </div>
+                  </div>
+
                   {/* 1-Click WhatsApp Quote */}
                   <a
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center space-x-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-4 px-6 rounded-xl shadow-glow-gold transition-all transform hover:-translate-y-0.5 text-sm"
+                    className="w-full flex items-center justify-center space-x-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-4 px-6 rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 text-sm"
                   >
                     <FaWhatsapp className="text-2xl" />
                     <span>Send Sizing Report on WhatsApp</span>

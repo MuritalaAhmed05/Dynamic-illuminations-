@@ -237,8 +237,7 @@ export default function SolarRoiCalculator() {
       {/* Main Results Display Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Metric Card 1: Monthly Diesel Spending */}
-        <div className="bg-gradient-to-br from-slate-900 via-rose-950/40 to-slate-950 p-6 rounded-3xl border border-rose-500/30 shadow-xl space-y-2 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-rose-500/10 rounded-full filter blur-xl pointer-events-none" />
+        <div className="bg-slate-900 p-6 rounded-3xl border border-rose-500/30 shadow-xl space-y-2 relative overflow-hidden">
           <div className="text-rose-400 text-xs font-bold uppercase tracking-wider flex items-center space-x-1.5">
             <FaGasPump />
             <span>Monthly Generator Burn</span>
@@ -252,8 +251,7 @@ export default function SolarRoiCalculator() {
         </div>
 
         {/* Metric Card 2: Recommended Solar Solution */}
-        <div className="bg-gradient-to-br from-slate-900 via-cyan-950/40 to-slate-950 p-6 rounded-3xl border border-cyan-500/30 shadow-xl space-y-2 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/10 rounded-full filter blur-xl pointer-events-none" />
+        <div className="bg-slate-900 p-6 rounded-3xl border border-cyan-500/30 shadow-xl space-y-2 relative overflow-hidden">
           <div className="text-cyan-400 text-xs font-bold uppercase tracking-wider flex items-center space-x-1.5">
             <FaSolarPanel />
             <span>Recommended Solar System</span>
@@ -268,8 +266,7 @@ export default function SolarRoiCalculator() {
         </div>
 
         {/* Metric Card 3: Payback Horizon */}
-        <div className="bg-gradient-to-br from-slate-900 via-amber-950/40 to-slate-950 p-6 rounded-3xl border border-amber-500/30 shadow-xl space-y-2 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-full filter blur-xl pointer-events-none" />
+        <div className="bg-slate-900 p-6 rounded-3xl border border-amber-500/30 shadow-xl space-y-2 relative overflow-hidden">
           <div className="text-amber-400 text-xs font-bold uppercase tracking-wider flex items-center space-x-1.5">
             <FaClock />
             <span>Solar Payback Period</span>
@@ -283,8 +280,7 @@ export default function SolarRoiCalculator() {
         </div>
 
         {/* Metric Card 4: 10-Year Net Savings */}
-        <div className="bg-gradient-to-br from-slate-900 via-emerald-950/50 to-slate-950 p-6 rounded-3xl border border-emerald-500/40 shadow-xl space-y-2 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/10 rounded-full filter blur-xl pointer-events-none" />
+        <div className="bg-slate-900 p-6 rounded-3xl border border-emerald-500/40 shadow-xl space-y-2 relative overflow-hidden">
           <div className="text-emerald-400 text-xs font-bold uppercase tracking-wider flex items-center space-x-1.5">
             <FaPiggyBank />
             <span>10-Year Net Profits</span>
@@ -354,7 +350,7 @@ export default function SolarRoiCalculator() {
       </div>
 
       {/* WhatsApp Quote Banner CTA */}
-      <div className="bg-gradient-to-r from-blue-950 via-slate-900 to-amber-950/60 p-8 rounded-3xl border border-amber-500/40 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+      <div className="bg-slate-900 p-8 rounded-3xl border border-amber-500/30 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
         <div className="space-y-1">
           <h3 className="text-xl font-extrabold text-white">
             Ready to Stop Burning Generator Fuel Money?
@@ -368,7 +364,7 @@ export default function SolarRoiCalculator() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-shrink-0 inline-flex items-center space-x-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-6 py-4 rounded-xl shadow-glow-gold transition-all transform hover:-translate-y-0.5 text-sm"
+          className="flex-shrink-0 inline-flex items-center space-x-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-4 rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 text-sm"
         >
           <FaWhatsapp className="text-2xl" />
           <span>Send ROI Audit to Engineer on WhatsApp</span>

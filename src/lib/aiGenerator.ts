@@ -1,4 +1,4 @@
-export interface AIProjectOutput {
+export interface ProjectTemplateOutput {
   title: string;
   category: 'Solar Power' | 'Architectural Lighting' | 'Smart Home' | 'Event Lighting' | 'Commercial Setup';
   shortDescription: string;
@@ -12,7 +12,8 @@ export interface AIProjectOutput {
   };
 }
 
-export function generateProjectContentWithAI(rawPrompt: string): AIProjectOutput {
+// Technical Project Specification Template Generator
+export function generateProjectTemplate(rawPrompt: string): ProjectTemplateOutput {
   const prompt = rawPrompt.toLowerCase();
 
   let category: 'Solar Power' | 'Architectural Lighting' | 'Smart Home' | 'Event Lighting' | 'Commercial Setup' = 'Solar Power';
@@ -78,3 +79,8 @@ Dynamic Illuminations engineered and executed a comprehensive ${kvaVal} kVA hybr
     },
   };
 }
+
+// Alias for backwards compatibility
+export const generateProjectContentWithAI = generateProjectTemplate;
+export type AIProjectOutput = ProjectTemplateOutput;
+

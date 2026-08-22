@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Avatar from 'react-avatar';
 import { useAuth } from '../../../context/AuthContext';
 import { 
   getProjectsFromFirestore, 
@@ -15,13 +17,12 @@ import {
   deleteReviewFromFirestore, 
   ReviewItem 
 } from '../../../lib/reviewsService';
-import { generateProjectContentWithAI } from '../../../lib/aiGenerator';
+import { generateProjectTemplate } from '../../../lib/aiGenerator';
 import ConfirmModal from '../../../components/ConfirmModal';
 import { 
   FaPlus, 
   FaEdit, 
   FaTrash, 
-  FaMagic, 
   FaSignOutAlt, 
   FaShieldAlt, 
   FaImage, 
@@ -37,10 +38,9 @@ import {
   FaFolderOpen,
   FaStar,
   FaQuoteLeft,
-  FaSpinner
+  FaSpinner,
+  FaBolt
 } from 'react-icons/fa';
-import Link from 'next/link';
-import Avatar from 'react-avatar';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -110,9 +110,9 @@ export default function DashboardClient() {
   const [location, setLocation] = useState<string>('');
   const [completionDate, setCompletionDate] = useState<string>('');
 
-  // AI Prompt State
-  const [aiPrompt, setAiPrompt] = useState<string>('');
-  const [isGeneratingAI, setIsGeneratingAI] = useState<boolean>(false);
+  // Spec Generator Prompt State
+  const [specPrompt, setSpecPrompt] = useState<string>('');
+  const [isGeneratingSpec, setIsGeneratingSpec] = useState<boolean>(false);
 
   // Admin Team Form State
   const [newTeamEmail, setNewTeamEmail] = useState<string>('');
@@ -186,7 +186,7 @@ export default function DashboardClient() {
     setBatteryBank('48V 200Ah Lithium');
     setLocation('Lagos, Nigeria');
     setCompletionDate('Jan 2025');
-    setAiPrompt('');
+    setSpecPrompt('');
     setIsFormOpen(true);
   };
 
@@ -250,13 +250,13 @@ export default function DashboardClient() {
     setVideoUrls((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handleAIGenerate = (e: React.FormEvent) => {
+  const handleGenerateSpec = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!aiPrompt.trim()) return;
+    if (!specPrompt.trim()) return;
 
-    setIsGeneratingAI(true);
+    setIsGeneratingSpec(true);
     setTimeout(() => {
-      const generated = generateProjectContentWithAI(aiPrompt);
+      const generated = generateProjectTemplate(specPrompt);
       setTitle(generated.title);
       setCategory(generated.category);
       setShortDescription(generated.shortDescription);
@@ -266,9 +266,9 @@ export default function DashboardClient() {
       setBatteryBank(generated.specs.batteryBank);
       setLocation(generated.specs.location);
       setCompletionDate(generated.specs.completionDate);
-      setIsGeneratingAI(false);
-      setStatusMsg({ type: 'success', text: '✨ Formatted markdown content generated with AI!' });
-    }, 600);
+      setIsGeneratingSpec(false);
+      setStatusMsg({ type: 'success', text: 'Formatted project specifications generated!' });
+    }, 200);
   };
 
   const handleSubmitForm = async (e: React.FormEvent) => {
@@ -404,7 +404,7 @@ export default function DashboardClient() {
         <div className="flex items-center space-x-3">
           <button
             onClick={openCreateForm}
-            className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-5 py-3 rounded-xl shadow-glow-gold text-sm flex items-center space-x-2 transition-all"
+            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-3 rounded-xl shadow-md text-sm flex items-center space-x-2 transition-all"
           >
             <FaPlus />
             <span>Add New Project</span>
@@ -426,7 +426,7 @@ export default function DashboardClient() {
           onClick={() => setActiveTab('projects')}
           className={`px-5 py-2.5 rounded-xl text-xs font-extrabold flex items-center space-x-2 transition-all ${
             activeTab === 'projects'
-              ? 'bg-amber-500 text-slate-950 shadow-glow-gold'
+              ? 'bg-amber-500 text-slate-950 shadow-md'
               : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
           }`}
         >
@@ -438,7 +438,7 @@ export default function DashboardClient() {
           onClick={() => setActiveTab('reviews')}
           className={`px-5 py-2.5 rounded-xl text-xs font-extrabold flex items-center space-x-2 transition-all ${
             activeTab === 'reviews'
-              ? 'bg-amber-500 text-slate-950 shadow-glow-gold'
+              ? 'bg-amber-500 text-slate-950 shadow-md'
               : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
           }`}
         >
@@ -450,7 +450,7 @@ export default function DashboardClient() {
           onClick={() => setActiveTab('team')}
           className={`px-5 py-2.5 rounded-xl text-xs font-extrabold flex items-center space-x-2 transition-all ${
             activeTab === 'team'
-              ? 'bg-amber-500 text-slate-950 shadow-glow-gold'
+              ? 'bg-amber-500 text-slate-950 shadow-md'
               : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
           }`}
         >
@@ -625,7 +625,7 @@ export default function DashboardClient() {
               />
               <button
                 type="submit"
-                className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-6 py-3.5 rounded-xl text-xs shadow-glow-gold flex items-center justify-center space-x-2"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-3.5 rounded-xl text-xs shadow-md flex items-center justify-center space-x-2"
               >
                 <FaPlus />
                 <span>Add Admin Member</span>
@@ -660,7 +660,7 @@ export default function DashboardClient() {
         </div>
       )}
 
-      {/* CRUD & AI GENERATOR MODAL */}
+      {/* CRUD & SPEC GENERATOR MODAL */}
       {isFormOpen && (
         <div className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
           <div className="glass-dark border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative my-8">
@@ -673,31 +673,31 @@ export default function DashboardClient() {
               </button>
             </div>
 
-            {/* AI Auto-Generator Box */}
-            <div className="mb-8 p-5 bg-gradient-to-r from-blue-950/80 via-slate-900 to-amber-950/40 rounded-2xl border border-amber-500/30">
+            {/* Quick Project Specification Generator Box */}
+            <div className="mb-8 p-5 bg-slate-900 rounded-2xl border border-slate-800">
               <div className="flex items-center space-x-2 text-amber-400 font-bold text-xs uppercase tracking-wider mb-2">
-                <FaMagic className="text-sm" />
-                <span>AI Project Details Auto-Generator</span>
+                <FaBolt className="text-sm" />
+                <span>Quick Project Specification Generator</span>
               </div>
               <p className="text-xs text-slate-300 mb-3">
-                Type basic keywords (e.g. &ldquo;15kVA solar setup in Lekki with 16 panels & lithium battery&rdquo;) and click generate to auto-fill title, descriptions, and specs in clean formatted Markdown!
+                Type basic project parameters (e.g. &ldquo;15kVA solar setup in Lekki with 16 panels & lithium battery&rdquo;) and click generate to auto-fill title, descriptions, and specs in clean formatted Markdown!
               </p>
 
               <div className="flex gap-2">
                 <input
                   type="text"
                   placeholder="e.g. 15kVA hybrid solar system in Ikoyi with 16 panels"
-                  value={aiPrompt}
-                  onChange={(e) => setAiPrompt(e.target.value)}
-                  className="flex-grow text-xs p-3 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl focus:ring-1 focus:ring-amber-500 focus:outline-none"
+                  value={specPrompt}
+                  onChange={(e) => setSpecPrompt(e.target.value)}
+                  className="flex-grow text-xs p-3 bg-slate-950 border border-slate-800 text-slate-200 rounded-xl focus:ring-1 focus:ring-amber-500 focus:outline-none"
                 />
                 <button
-                  onClick={handleAIGenerate}
-                  disabled={isGeneratingAI || !aiPrompt.trim()}
-                  className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-4 py-2 rounded-xl text-xs flex-shrink-0 flex items-center space-x-1 shadow-glow-gold disabled:opacity-50"
+                  onClick={handleGenerateSpec}
+                  disabled={isGeneratingSpec || !specPrompt.trim()}
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs flex-shrink-0 flex items-center space-x-1 shadow-md disabled:opacity-50"
                 >
-                  <FaMagic />
-                  <span>{isGeneratingAI ? 'Generating...' : 'Auto-Generate'}</span>
+                  <FaBolt />
+                  <span>{isGeneratingSpec ? 'Generating...' : 'Auto-Fill Specs'}</span>
                 </button>
               </div>
             </div>
@@ -898,7 +898,7 @@ export default function DashboardClient() {
                 <button
                   type="submit"
                   disabled={isSavingProject}
-                  className="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black rounded-xl text-xs shadow-glow-gold flex items-center space-x-2 disabled:opacity-50"
+                  className="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs shadow-md flex items-center space-x-2 disabled:opacity-50"
                 >
                   {isSavingProject ? (
                     <>

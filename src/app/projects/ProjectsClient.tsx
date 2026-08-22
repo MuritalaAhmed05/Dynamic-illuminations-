@@ -39,7 +39,7 @@ export default function ProjectsClient() {
 
       {/* Hero Header */}
       <div className="max-w-6xl mx-auto text-center mb-12 relative z-10" data-aos="fade-down">
-        <div className="inline-flex items-center space-x-2 bg-slate-900 border border-slate-800 text-amber-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 shadow-glow-gold">
+        <div className="inline-flex items-center space-x-2 bg-slate-900 border border-slate-800 text-amber-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 shadow-md">
           <FaAward />
           <span>Our Portfolio & Installation Case Studies</span>
         </div>
@@ -59,7 +59,7 @@ export default function ProjectsClient() {
             </span>
             <Link
               href="/admin/dashboard"
-              className="bg-amber-500 text-slate-950 font-extrabold text-xs px-3 py-1.5 rounded-xl shadow-glow-gold hover:bg-amber-400 transition-colors"
+              className="bg-amber-500 text-slate-950 font-extrabold text-xs px-3 py-1.5 rounded-xl shadow-md hover:bg-amber-400 transition-colors"
             >
               Manage Projects Portal
             </Link>
@@ -75,7 +75,7 @@ export default function ProjectsClient() {
             onClick={() => setSelectedCategory(cat)}
             className={`px-4 py-2 rounded-2xl text-xs font-bold transition-all ${
               selectedCategory === cat
-                ? 'bg-amber-500 text-slate-950 shadow-glow-gold'
+                ? 'bg-amber-500 text-slate-950 shadow-md'
                 : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800'
             }`}
           >
@@ -146,7 +146,7 @@ export default function ProjectsClient() {
                   <div className="flex items-center space-x-3">
                     <Link
                       href={`/projects/${project.id}`}
-                      className="flex-1 inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-3.5 px-6 rounded-xl shadow-glow-gold text-sm transition-all transform hover:-translate-y-0.5"
+                      className="flex-1 inline-flex items-center justify-center space-x-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3.5 px-6 rounded-xl shadow-md text-sm transition-all transform hover:-translate-y-0.5"
                     >
                       <FaEye />
                       <span>View Full Details</span>

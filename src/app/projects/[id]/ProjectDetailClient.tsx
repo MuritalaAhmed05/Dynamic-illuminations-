@@ -180,7 +180,7 @@ export default function ProjectDetailClient({ projectId }: { projectId: string }
                   }}
                   className={`relative flex-shrink-0 w-24 h-18 sm:w-28 sm:h-20 rounded-xl overflow-hidden border-2 transition-all bg-slate-900 flex items-center justify-center ${
                     selectedMedia === vid && isVideo
-                      ? 'border-amber-400 shadow-glow-gold scale-105'
+                      ? 'border-amber-400 shadow-md scale-105'
                       : 'border-slate-800 opacity-70 hover:opacity-100'
                   }`}
                 >
@@ -204,7 +204,7 @@ export default function ProjectDetailClient({ projectId }: { projectId: string }
                     }}
                     className={`relative flex-shrink-0 w-24 h-18 sm:w-28 sm:h-20 rounded-xl overflow-hidden border-2 transition-all ${
                       selectedMedia === img && !isVideo
-                        ? 'border-amber-400 shadow-glow-gold scale-105'
+                        ? 'border-amber-400 shadow-md scale-105'
                         : 'border-slate-800 opacity-70 hover:opacity-100'
                     }`}
                   >
@@ -234,9 +234,7 @@ export default function ProjectDetailClient({ projectId }: { projectId: string }
           </div>
 
           {/* Technical Specifications Grid */}
-          <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-950 p-6 sm:p-8 rounded-3xl border border-blue-900/50 shadow-2xl space-y-4 relative overflow-hidden">
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-amber-500/10 rounded-full filter blur-2xl pointer-events-none" />
-
+          <div className="bg-slate-900 p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-xl space-y-4 relative overflow-hidden">
             <h2 className="text-lg font-bold text-white border-b border-slate-800 pb-3 flex items-center space-x-2">
               <FaBolt className="text-amber-400" />
               <span>Installed System Specifications</span>
@@ -282,7 +280,7 @@ export default function ProjectDetailClient({ projectId }: { projectId: string }
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center space-x-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-4 px-6 rounded-xl shadow-glow-gold transition-all transform hover:-translate-y-0.5"
+                className="w-full flex items-center justify-center space-x-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-4 px-6 rounded-xl shadow-md transition-all transform hover:-translate-y-0.5"
               >
                 <FaWhatsapp className="text-2xl" />
                 <span className="text-base tracking-wide">Inquire About Similar Project</span>

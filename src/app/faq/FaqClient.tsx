@@ -107,13 +107,13 @@ export default function FaqClient() {
         
         {/* Header with Live Animated Energy Flow Diagram */}
         <div className="text-center space-y-4" data-aos="fade-down">
-          <div className="inline-flex items-center space-x-2 bg-slate-900 border border-slate-800 text-amber-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-glow-gold">
+          <div className="inline-flex items-center space-x-2 bg-slate-900 border border-slate-800 text-amber-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-md">
             <FaBolt className="text-amber-400 animate-pulse" />
             <span>Interactive Knowledge & Power Center</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
-            How <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-cyan-400 bg-clip-text text-transparent">Dynamic Illuminations</span> Works
+            How <span className="text-amber-400">Dynamic Illuminations</span> Works
           </h1>
 
           <p className="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
@@ -122,7 +122,7 @@ export default function FaqClient() {
 
           {/* DYNAMIC ANIMATED ENERGY FLOW DIAGRAM */}
           <div className="pt-6">
-            <div className="glass-dark p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-2xl relative overflow-hidden bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950">
+            <div className="glass-dark p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-2xl relative overflow-hidden bg-slate-900">
               <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6 flex items-center justify-center space-x-2">
                 <MdOutlineElectricalServices className="text-amber-400 text-lg" />
                 <span>Live Solar & Lighting Power Circuit Diagram</span>
@@ -134,7 +134,7 @@ export default function FaqClient() {
                 <div
                   className={`p-4 rounded-2xl border transition-all duration-500 flex flex-col items-center text-center space-y-2 relative ${
                     activeCircuitNode === 0
-                      ? 'bg-amber-500/20 border-amber-500 shadow-glow-gold scale-105'
+                      ? 'bg-amber-500/20 border-amber-500 shadow-md scale-105'
                       : 'bg-slate-900/80 border-slate-800'
                   }`}
                 >
@@ -149,7 +149,7 @@ export default function FaqClient() {
                 <div
                   className={`p-4 rounded-2xl border transition-all duration-500 flex flex-col items-center text-center space-y-2 relative ${
                     activeCircuitNode === 1
-                      ? 'bg-cyan-500/20 border-cyan-400 shadow-glow-blue scale-105'
+                      ? 'bg-cyan-500/20 border-cyan-400 shadow-md scale-105'
                       : 'bg-slate-900/80 border-slate-800'
                   }`}
                 >
@@ -164,7 +164,7 @@ export default function FaqClient() {
                 <div
                   className={`p-4 rounded-2xl border transition-all duration-500 flex flex-col items-center text-center space-y-2 relative ${
                     activeCircuitNode === 2
-                      ? 'bg-emerald-500/20 border-emerald-400 shadow-glow-gold scale-105'
+                      ? 'bg-emerald-500/20 border-emerald-400 shadow-md scale-105'
                       : 'bg-slate-900/80 border-slate-800'
                   }`}
                 >
@@ -179,7 +179,7 @@ export default function FaqClient() {
                 <div
                   className={`p-4 rounded-2xl border transition-all duration-500 flex flex-col items-center text-center space-y-2 relative ${
                     activeCircuitNode === 3
-                      ? 'bg-amber-400/20 border-amber-300 shadow-glow-gold scale-105'
+                      ? 'bg-amber-400/20 border-amber-300 shadow-md scale-105'
                       : 'bg-slate-900/80 border-slate-800'
                   }`}
                 >
@@ -216,7 +216,7 @@ export default function FaqClient() {
                 onClick={() => setActiveTab(cat)}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                   activeTab === cat
-                    ? 'bg-amber-500 text-slate-950 shadow-glow-gold scale-102'
+                    ? 'bg-amber-500 text-slate-950 shadow-md scale-102'
                     : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
                 }`}
               >
@@ -243,7 +243,7 @@ export default function FaqClient() {
                 <div
                   key={faq.id}
                   className={`glass-dark border rounded-3xl overflow-hidden transition-all duration-300 ${
-                    isOpen ? 'border-amber-500/50 shadow-glow-gold bg-slate-900/90' : 'border-slate-800 hover:border-slate-700'
+                    isOpen ? 'border-amber-500/50 shadow-md bg-slate-900/90' : 'border-slate-800 hover:border-slate-700'
                   }`}
                 >
                   <button
@@ -285,7 +285,7 @@ export default function FaqClient() {
         </div>
 
         {/* Ask Engineer WhatsApp Banner */}
-        <div className="bg-gradient-to-r from-blue-950 via-slate-900 to-amber-950/60 p-8 rounded-3xl border border-amber-500/40 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left" data-aos="zoom-in">
+        <div className="bg-slate-900 p-8 rounded-3xl border border-amber-500/30 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left" data-aos="zoom-in">
           <div className="space-y-1">
             <h3 className="text-xl font-extrabold text-white">
               Have a Specific Technical Question?
@@ -299,7 +299,7 @@ export default function FaqClient() {
             href="https://wa.me/2348107533654?text=Hello%20Dynamic%20Illuminations!%20I%20have%20a%20technical%20question%20about%20your%20solar%20and%20lighting%20services."
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-shrink-0 inline-flex items-center space-x-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-6 py-4 rounded-xl shadow-glow-gold transition-all transform hover:-translate-y-0.5 text-xs sm:text-sm"
+            className="flex-shrink-0 inline-flex items-center space-x-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-4 rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 text-xs sm:text-sm"
           >
             <FaWhatsapp className="text-xl sm:text-2xl" />
             <span>Chat 24/7 on WhatsApp</span>

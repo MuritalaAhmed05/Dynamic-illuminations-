@@ -16,7 +16,7 @@ export default function ContactClient() {
       <div className="absolute top-20 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full filter blur-[120px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto text-center mb-16 relative z-10" data-aos="fade-down">
-        <div className="inline-flex items-center space-x-2 bg-slate-900 border border-slate-800 text-amber-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 shadow-glow-gold">
+        <div className="inline-flex items-center space-x-2 bg-slate-900 border border-slate-800 text-amber-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 shadow-md">
           <FaWhatsapp className="text-emerald-400" />
           <span>We&apos;re Here To Help</span>
         </div>
@@ -112,7 +112,7 @@ export default function ContactClient() {
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-4 rounded-xl shadow-glow-gold transition-all"
+              className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-4 rounded-xl shadow-md transition-all"
             >
               Send Message
             </button>

@@ -78,7 +78,7 @@ const ReviewList: React.FC = () => {
           </p>
           <Link
             href="/leave-review"
-            className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs shadow-glow-gold transition-all"
+            className="inline-flex items-center space-x-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-xs shadow-md transition-all"
           >
             <FaPen />
             <span>Leave a Review</span>
