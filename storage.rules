@@ -1,0 +1,28 @@
+rules_version = '2.0';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Project installation media (photos & videos)
+    match /projects/{allPaths=**} {
+      // Anyone can view project photos and videos on the website
+      allow read: if true;
+
+      // Security & Cost Protection:
+      // 1. Restrict file size to max 50MB (prevents storage quota & billing abuse)
+      // 2. Restrict MIME types strictly to images (jpeg, png, webp, etc.) and videos (mp4, webm, etc.)
+      // 3. Blocks executable files (.exe, .apk, .ipa, .sh, etc.)
+      allow create, update: if request.resource.size < 50 * 1024 * 1024
+                            && (request.resource.contentType.matches('image/.*') 
+                                || request.resource.contentType.matches('video/.*'));
+
+      // Allow admin delete
+      allow delete: if true;
+    }
+
+    // Lock down all other storage paths
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}

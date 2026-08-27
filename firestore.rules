@@ -1,0 +1,19 @@
+rules_version = '2.0';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Projects collection: Public read access for portfolio visitors
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+    }
+
+    // Reviews collection: Public read access, validated review creation
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if request.resource.data.name is string 
+                    && request.resource.data.text is string;
+      allow update, delete: if true;
+    }
+  }
+}
