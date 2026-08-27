@@ -996,7 +996,7 @@ export default function DashboardClient() {
                       className="w-full text-xs p-2.5 bg-slate-950 border border-slate-800 text-slate-200 rounded-xl focus:ring-1 focus:ring-amber-500 focus:outline-none"
                     />
                     <div className="flex flex-wrap gap-1 pt-1">
-                      {['3.5 kVA', '5 kVA Hybrid', '7.5 kVA', '10 kVA Hybrid', '15 kVA Hybrid', '20 kVA Commercial', '30 kVA Solar'].map((preset) => (
+                      {['1.5 kVA', '2 kVA', '3.5 kVA', '5 kVA Hybrid', '7.5 kVA', '8 kVA Hybrid', '10 kVA Hybrid', '15 kVA Hybrid', '20 kVA', '30 kVA Solar'].map((preset) => (
                         <button
                           key={preset}
                           type="button"
@@ -1027,7 +1027,7 @@ export default function DashboardClient() {
                       className="w-full text-xs p-2.5 bg-slate-950 border border-slate-800 text-slate-200 rounded-xl focus:ring-1 focus:ring-cyan-500 focus:outline-none"
                     />
                     <div className="flex flex-wrap gap-1 pt-1">
-                      {['4x 550W (2.2 kW)', '8x 550W (4.4 kW)', '12x 550W (6.6 kW)', '16x 550W (8.8 kW)', '24x 550W (13.2 kW)'].map((preset) => (
+                      {['1x 450W Panel', '1x 550W Panel', '1x 600W Panel', '4x 550W (2.2 kW)', '8x 550W (4.4 kW)', '12x 550W (6.6 kW)', '16x 550W (8.8 kW)', '24x 600W (14.4 kW)'].map((preset) => (
                         <button
                           key={preset}
                           type="button"
@@ -1058,7 +1058,7 @@ export default function DashboardClient() {
                       className="w-full text-xs p-2.5 bg-slate-950 border border-slate-800 text-slate-200 rounded-xl focus:ring-1 focus:ring-emerald-500 focus:outline-none"
                     />
                     <div className="flex flex-wrap gap-1 pt-1">
-                      {['5 kWh Lithium', '10 kWh Lithium', '15 kWh Lithium', '20 kWh LiFePO4', '30 kWh Industrial'].map((preset) => (
+                      {['12V 200Ah Gel', '24V 200Ah Lithium', '48V 100Ah (5 kWh)', '48V 200Ah (10 kWh)', '15 kWh Lithium', '20 kWh LiFePO4', '30 kWh Industrial'].map((preset) => (
                         <button
                           key={preset}
                           type="button"
