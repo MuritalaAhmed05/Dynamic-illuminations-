@@ -41,10 +41,12 @@ import {
   FaSpinner,
   FaBolt
 } from 'react-icons/fa';
+import { storage } from '../../../firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-// Helper function to compress images before storing to prevent Firestore 1MB quota errors
+// Helper function to compress images before storing/uploading
 function compressImageFile(file: File, maxWidth = 1200, quality = 0.8): Promise<string> {
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -75,6 +77,53 @@ function compressImageFile(file: File, maxWidth = 1200, quality = 0.8): Promise<
     };
     reader.readAsDataURL(file);
   });
+}
+
+function dataURLtoBlob(dataurl: string): Blob {
+  const arr = dataurl.split(',');
+  const mime = arr[0].match(/:(.*?);/)?.[1] || 'image/jpeg';
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new Blob([u8arr], { type: mime });
+}
+
+// Upload file to Firebase Cloud Storage (with canvas compression for images and base64 fallback)
+async function uploadMediaFile(file: File, isVideo = false): Promise<string> {
+  const sanitizedName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const path = `projects/${isVideo ? 'videos' : 'images'}/${Date.now()}_${sanitizedName}`;
+
+  try {
+    const storageRef = ref(storage, path);
+
+    if (!isVideo) {
+      const compressedDataUrl = await compressImageFile(file, 1400, 0.82);
+      const blob = dataURLtoBlob(compressedDataUrl);
+      const snapshot = await uploadBytes(storageRef, blob);
+      const downloadUrl = await getDownloadURL(snapshot.ref);
+      return downloadUrl;
+    } else {
+      const snapshot = await uploadBytes(storageRef, file);
+      const downloadUrl = await getDownloadURL(snapshot.ref);
+      return downloadUrl;
+    }
+  } catch (error) {
+    console.warn('Firebase Storage direct upload notice, using compressed fallback:', error);
+
+    if (!isVideo) {
+      return await compressImageFile(file, 900, 0.72);
+    } else {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target?.result as string);
+        reader.onerror = (err) => reject(err);
+        reader.readAsDataURL(file);
+      });
+    }
+  }
 }
 
 export default function DashboardClient() {
@@ -117,6 +166,11 @@ export default function DashboardClient() {
   // Admin Team Form State
   const [newTeamEmail, setNewTeamEmail] = useState<string>('');
   const [teamSuccessMsg, setTeamSuccessMsg] = useState<string>('');
+
+  // Media Uploading Progress State
+  const [isUploadingMedia, setIsUploadingMedia] = useState<boolean>(false);
+  const [uploadStatusText, setUploadStatusText] = useState<string>('');
+  const [manualVideoInput, setManualVideoInput] = useState<string>('');
 
   // Confirm Modal State
   const [confirmModalState, setConfirmModalState] = useState<{
@@ -187,6 +241,7 @@ export default function DashboardClient() {
     setLocation('');
     setCompletionDate('');
     setSpecPrompt('');
+    setManualVideoInput('');
     setIsFormOpen(true);
   };
 
@@ -205,41 +260,87 @@ export default function DashboardClient() {
     setBatteryBank(proj.specs?.batteryBank || '');
     setLocation(proj.specs?.location || '');
     setCompletionDate(proj.specs?.completionDate || '');
+    setManualVideoInput('');
     setIsFormOpen(true);
   };
 
-  // File Upload Handlers (Cover, Gallery, Video) with Auto-Compression
+  // File Upload Handlers (Cover, Gallery, Video) with Cloud Storage & Progress
   const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const compressedData = await compressImageFile(file);
-      setCoverImage(compressedData);
+    if (!file) return;
+
+    setIsUploadingMedia(true);
+    setUploadStatusText(`Uploading cover file "${file.name}"...`);
+
+    try {
+      const url = await uploadMediaFile(file, false);
+      setCoverImage(url);
+      setStatusMsg({ type: 'success', text: 'Cover image uploaded successfully!' });
+    } catch (err: any) {
+      console.error('Cover upload error:', err);
+      setStatusMsg({ type: 'error', text: 'Failed to upload cover file from device.' });
+    } finally {
+      setIsUploadingMedia(false);
+      setUploadStatusText('');
+      e.target.value = '';
     }
   };
 
   const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files && files.length > 0) {
-      for (const file of Array.from(files)) {
-        const compressedData = await compressImageFile(file);
-        setGalleryImages((prev) => [...prev, compressedData]);
+    if (!files || files.length === 0) return;
+
+    setIsUploadingMedia(true);
+    const fileList = Array.from(files);
+
+    try {
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i];
+        setUploadStatusText(`Uploading photo ${i + 1} of ${fileList.length} ("${file.name}")...`);
+        const url = await uploadMediaFile(file, false);
+        setGalleryImages((prev) => [...prev, url]);
       }
+      setStatusMsg({ type: 'success', text: `Uploaded ${fileList.length} photo(s) successfully!` });
+    } catch (err: any) {
+      console.error('Gallery upload error:', err);
+      setStatusMsg({ type: 'error', text: 'Failed to upload gallery photos from device.' });
+    } finally {
+      setIsUploadingMedia(false);
+      setUploadStatusText('');
+      e.target.value = '';
     }
   };
 
-  const handleVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files && files.length > 0) {
-      Array.from(files).forEach((file) => {
-        const reader = new FileReader();
-        reader.onload = (uploadEvent) => {
-          if (uploadEvent.target?.result) {
-            setVideoUrls((prev) => [...prev, uploadEvent.target!.result as string]);
-          }
-        };
-        reader.readAsDataURL(file);
-      });
+    if (!files || files.length === 0) return;
+
+    setIsUploadingMedia(true);
+    const fileList = Array.from(files);
+
+    try {
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i];
+        const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+        setUploadStatusText(`Uploading video ${i + 1} of ${fileList.length} ("${file.name}" - ${sizeMb} MB)...`);
+        const url = await uploadMediaFile(file, true);
+        setVideoUrls((prev) => [...prev, url]);
+      }
+      setStatusMsg({ type: 'success', text: 'Video uploaded successfully!' });
+    } catch (err: any) {
+      console.error('Video upload error:', err);
+      setStatusMsg({ type: 'error', text: 'Video upload failed. Check file size or network connection.' });
+    } finally {
+      setIsUploadingMedia(false);
+      setUploadStatusText('');
+      e.target.value = '';
     }
+  };
+
+  const addManualVideoUrl = () => {
+    if (!manualVideoInput.trim()) return;
+    setVideoUrls((prev) => [...prev, manualVideoInput.trim()]);
+    setManualVideoInput('');
   };
 
   const removeGalleryImage = (index: number) => {
@@ -674,6 +775,13 @@ export default function DashboardClient() {
             </div>
 
             {/* Quick Project Specification Generator Box */}
+            {isUploadingMedia && (
+              <div className="mb-6 p-4 bg-amber-500/20 border border-amber-500/30 text-amber-300 rounded-2xl text-xs font-bold flex items-center space-x-3 animate-pulse shadow-lg">
+                <FaSpinner className="animate-spin text-amber-400 text-lg flex-shrink-0" />
+                <span>{uploadStatusText || 'Uploading media file from device to cloud storage...'}</span>
+              </div>
+            )}
+
             <div className="mb-8 p-5 bg-slate-900 rounded-2xl border border-slate-800">
               <div className="flex items-center space-x-2 text-amber-400 font-bold text-xs uppercase tracking-wider mb-2">
                 <FaBolt className="text-sm" />
@@ -708,9 +816,9 @@ export default function DashboardClient() {
               <div>
                 <strong className="text-cyan-400 uppercase font-bold tracking-wider block mb-1">Recommended Media Guidelines per Project</strong>
                 <p className="leading-relaxed">
-                  • <strong>1 Main Cover Photo</strong> (High-impact installation preview)<br />
+                  • <strong>1 Main Cover Photo</strong> (Upload photo from device or paste image URL)<br />
                   • <strong>3 to 6 Gallery Photos</strong> (Roof solar panels, Inverter, Lithium battery, Night lighting effect)<br />
-                  • <strong>1 to 2 Short Videos</strong> (15-30s drone view or walkthrough)
+                  • <strong>1 to 2 Short Videos</strong> (Upload video file from device or paste video URL)
                 </p>
               </div>
             </div>
@@ -749,21 +857,21 @@ export default function DashboardClient() {
               {/* COVER IMAGE FILE UPLOAD */}
               <div className="space-y-3 pt-2 border-t border-slate-800/80">
                 <label className="block text-xs font-bold text-amber-400 uppercase tracking-wider">
-                  Main Cover Preview Image (File Upload or URL)
+                  Main Cover Preview Image (Upload from Device or Paste URL)
                 </label>
 
                 <div className="flex flex-col sm:flex-row items-center gap-3">
                   <label className="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-bold text-slate-200 px-4 py-3 rounded-xl cursor-pointer flex items-center space-x-2 flex-shrink-0">
                     <FaUpload className="text-amber-400" />
                     <span>Upload Cover File</span>
-                    <input type="file" accept="image/*" onChange={handleCoverUpload} className="hidden" />
+                    <input type="file" accept="image/*" onChange={handleCoverUpload} className="hidden" disabled={isUploadingMedia} />
                   </label>
 
                   <input
                     type="text"
                     value={coverImage}
                     onChange={(e) => setCoverImage(e.target.value)}
-                    placeholder="/images/panel1.jpg or image URL"
+                    placeholder="Image URL or uploaded file preview link"
                     className="w-full text-xs p-3 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl focus:ring-1 focus:ring-amber-500 focus:outline-none"
                   />
                 </div>
@@ -783,8 +891,8 @@ export default function DashboardClient() {
                   </label>
                   <label className="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-bold text-slate-200 px-3 py-1.5 rounded-xl cursor-pointer flex items-center space-x-1.5">
                     <FaUpload className="text-cyan-400 text-xs" />
-                    <span>+ Add Photos</span>
-                    <input type="file" accept="image/*" multiple onChange={handleGalleryUpload} className="hidden" />
+                    <span>+ Add Device Photos</span>
+                    <input type="file" accept="image/*" multiple onChange={handleGalleryUpload} className="hidden" disabled={isUploadingMedia} />
                   </label>
                 </div>
 
@@ -804,7 +912,7 @@ export default function DashboardClient() {
                 </div>
               </div>
 
-              {/* VIDEO FILES UPLOAD */}
+              {/* VIDEO FILES UPLOAD & URL LINK */}
               <div className="space-y-3 pt-2 border-t border-slate-800/80">
                 <div className="flex justify-between items-center">
                   <label className="block text-xs font-bold text-rose-400 uppercase tracking-wider">
@@ -812,9 +920,27 @@ export default function DashboardClient() {
                   </label>
                   <label className="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-bold text-slate-200 px-3 py-1.5 rounded-xl cursor-pointer flex items-center space-x-1.5">
                     <FaVideo className="text-rose-400 text-xs" />
-                    <span>+ Add Video File</span>
-                    <input type="file" accept="video/*" multiple onChange={handleVideoUpload} className="hidden" />
+                    <span>+ Upload Video File</span>
+                    <input type="file" accept="video/*" multiple onChange={handleVideoUpload} className="hidden" disabled={isUploadingMedia} />
                   </label>
+                </div>
+
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="Or paste video URL (e.g. https://... or video link)"
+                    value={manualVideoInput}
+                    onChange={(e) => setManualVideoInput(e.target.value)}
+                    className="flex-grow text-xs p-2.5 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl focus:ring-1 focus:ring-rose-500 focus:outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={addManualVideoUrl}
+                    disabled={!manualVideoInput.trim()}
+                    className="bg-rose-950/80 hover:bg-rose-900 border border-rose-800/80 text-rose-300 font-bold px-3 py-2 rounded-xl text-xs flex-shrink-0 disabled:opacity-50"
+                  >
+                    + Add Link
+                  </button>
                 </div>
 
                 <div className="space-y-2">
@@ -890,17 +1016,22 @@ export default function DashboardClient() {
                 <button
                   type="button"
                   onClick={() => setIsFormOpen(false)}
-                  disabled={isSavingProject}
+                  disabled={isSavingProject || isUploadingMedia}
                   className="px-5 py-3 bg-slate-900 text-slate-400 hover:text-white rounded-xl text-xs font-bold disabled:opacity-50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  disabled={isSavingProject}
+                  disabled={isSavingProject || isUploadingMedia}
                   className="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs shadow-md flex items-center space-x-2 disabled:opacity-50"
                 >
-                  {isSavingProject ? (
+                  {isUploadingMedia ? (
+                    <>
+                      <FaSpinner className="animate-spin text-sm" />
+                      <span>Uploading Media from Device...</span>
+                    </>
+                  ) : isSavingProject ? (
                     <>
                       <FaSpinner className="animate-spin text-sm" />
                       <span>Saving Project Updates...</span>
