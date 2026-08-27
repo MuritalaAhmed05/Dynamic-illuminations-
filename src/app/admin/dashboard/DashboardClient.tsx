@@ -132,15 +132,26 @@ async function uploadMediaFile(
     uploadTask.on(
       'state_changed',
       (snapshot) => {
-        const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        const transferredMb = (snapshot.bytesTransferred / (1024 * 1024)).toFixed(1);
-        const totalMb = (snapshot.totalBytes / (1024 * 1024)).toFixed(1);
+        const total = snapshot.totalBytes && snapshot.totalBytes > 0 ? snapshot.totalBytes : (file.size || 1);
+        const transferred = snapshot.bytesTransferred || 0;
+        const rawPct = total > 0 ? Math.round((transferred / total) * 100) : 0;
+        const pct = isNaN(rawPct) ? 0 : Math.min(100, Math.max(0, rawPct));
+        const transferredMb = (transferred / (1024 * 1024)).toFixed(1);
+        const totalMb = (total / (1024 * 1024)).toFixed(1);
         if (onProgress) onProgress(pct, transferredMb, totalMb);
       },
-      (error) => {
+      (error: any) => {
         clearTimeout(timeout);
         console.error('Firebase Storage video upload error:', error);
-        reject(error);
+        let errorMsg = 'Video upload failed.';
+        if (error?.code === 'storage/unauthorized') {
+          errorMsg = 'Upload blocked by Firebase Storage Security Rules. Please update Storage Rules in your Firebase Console.';
+        } else if (error?.code === 'storage/canceled') {
+          errorMsg = 'Video upload was canceled.';
+        } else if (error?.message) {
+          errorMsg = `Video upload error: ${error.message}`;
+        }
+        reject(new Error(errorMsg));
       },
       async () => {
         clearTimeout(timeout);
