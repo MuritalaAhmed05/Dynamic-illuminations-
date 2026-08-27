@@ -48,7 +48,7 @@ import {
   FaMagic
 } from 'react-icons/fa';
 import { storage } from '../../../firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -97,39 +97,62 @@ function dataURLtoBlob(dataurl: string): Blob {
   return new Blob([u8arr], { type: mime });
 }
 
-// Upload file to Firebase Cloud Storage (with canvas compression for images and base64 fallback)
-async function uploadMediaFile(file: File, isVideo = false): Promise<string> {
+// Upload file to Firebase Cloud Storage with live progress tracking and timeout safeguard
+async function uploadMediaFile(
+  file: File, 
+  isVideo = false, 
+  onProgress?: (pct: number, transferredMb: string, totalMb: string) => void
+): Promise<string> {
   const sanitizedName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
   const path = `projects/${isVideo ? 'videos' : 'images'}/${Date.now()}_${sanitizedName}`;
+  const storageRef = ref(storage, path);
 
-  try {
-    const storageRef = ref(storage, path);
-
-    if (!isVideo) {
+  if (!isVideo) {
+    // Compress images first before uploading
+    try {
       const compressedDataUrl = await compressImageFile(file, 1400, 0.82);
       const blob = dataURLtoBlob(compressedDataUrl);
       const snapshot = await uploadBytes(storageRef, blob);
-      const downloadUrl = await getDownloadURL(snapshot.ref);
-      return downloadUrl;
-    } else {
-      const snapshot = await uploadBytes(storageRef, file);
-      const downloadUrl = await getDownloadURL(snapshot.ref);
-      return downloadUrl;
-    }
-  } catch (error) {
-    console.warn('Firebase Storage direct upload notice, using compressed fallback:', error);
-
-    if (!isVideo) {
+      return await getDownloadURL(snapshot.ref);
+    } catch (error) {
+      console.warn('Firebase Storage image upload notice, using compressed data URL fallback:', error);
       return await compressImageFile(file, 900, 0.72);
-    } else {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => resolve(e.target?.result as string);
-        reader.onerror = (err) => reject(err);
-        reader.readAsDataURL(file);
-      });
     }
   }
+
+  // Videos: Resumable upload with progress listener & 90s timeout safeguard
+  return new Promise((resolve, reject) => {
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    const timeout = setTimeout(() => {
+      uploadTask.cancel();
+      reject(new Error('Video upload timed out. Check network connection or paste a video link instead.'));
+    }, 90000); // 90 seconds timeout safeguard
+
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        const transferredMb = (snapshot.bytesTransferred / (1024 * 1024)).toFixed(1);
+        const totalMb = (snapshot.totalBytes / (1024 * 1024)).toFixed(1);
+        if (onProgress) onProgress(pct, transferredMb, totalMb);
+      },
+      (error) => {
+        clearTimeout(timeout);
+        console.error('Firebase Storage video upload error:', error);
+        reject(error);
+      },
+      async () => {
+        clearTimeout(timeout);
+        try {
+          const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+          resolve(downloadUrl);
+        } catch (err) {
+          reject(err);
+        }
+      }
+    );
+  });
 }
 
 export default function DashboardClient() {
@@ -327,15 +350,20 @@ export default function DashboardClient() {
     try {
       for (let i = 0; i < fileList.length; i++) {
         const file = fileList[i];
-        const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
-        setUploadStatusText(`Uploading video ${i + 1} of ${fileList.length} ("${file.name}" - ${sizeMb} MB)...`);
-        const url = await uploadMediaFile(file, true);
+        const initialSizeMb = (file.size / (1024 * 1024)).toFixed(1);
+        setUploadStatusText(`Preparing video ${i + 1} of ${fileList.length} ("${file.name}" - ${initialSizeMb} MB)...`);
+
+        const url = await uploadMediaFile(file, true, (pct, transferredMb, totalMb) => {
+          setUploadStatusText(`Uploading video ${i + 1} of ${fileList.length} ("${file.name}"): ${pct}% (${transferredMb} MB / ${totalMb} MB)...`);
+        });
+
         setVideoUrls((prev) => [...prev, url]);
       }
-      setStatusMsg({ type: 'success', text: 'Video uploaded successfully!' });
+      setStatusMsg({ type: 'success', text: 'Video uploaded successfully to Cloud Storage!' });
     } catch (err: any) {
       console.error('Video upload error:', err);
-      setStatusMsg({ type: 'error', text: 'Video upload failed. Check file size or network connection.' });
+      const msg = err?.message || 'Video upload failed. Check network or storage rules.';
+      setStatusMsg({ type: 'error', text: msg });
     } finally {
       setIsUploadingMedia(false);
       setUploadStatusText('');
