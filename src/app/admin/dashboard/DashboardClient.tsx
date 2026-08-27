@@ -39,7 +39,13 @@ import {
   FaStar,
   FaQuoteLeft,
   FaSpinner,
-  FaBolt
+  FaBolt,
+  FaSolarPanel,
+  FaBatteryFull,
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaUserShield,
+  FaMagic
 } from 'react-icons/fa';
 import { storage } from '../../../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -341,6 +347,17 @@ export default function DashboardClient() {
     if (!manualVideoInput.trim()) return;
     setVideoUrls((prev) => [...prev, manualVideoInput.trim()]);
     setManualVideoInput('');
+  };
+
+  const generateShortCardPreview = () => {
+    const inv = inverterCapacity.trim() || 'High-capacity hybrid solar inverter';
+    const pan = solarPanels.trim() || 'Tier-1 monocrystalline solar panels';
+    const bat = batteryBank.trim() || 'lithium-ion battery bank';
+    const loc = location.trim() || 'Lagos, Nigeria';
+
+    const generatedText = `High-efficiency ${inv} system with ${pan} and ${bat} delivering 24/7 zero-downtime uninterrupted power in ${loc}.`;
+    setShortDescription(generatedText);
+    setStatusMsg({ type: 'success', text: 'Short Card Preview generated from specs!' });
   };
 
   const removeGalleryImage = (index: number) => {
@@ -956,40 +973,187 @@ export default function DashboardClient() {
               </div>
 
               {/* Technical Specs */}
-              <div className="space-y-3 pt-2 border-t border-slate-800/80">
-                <h4 className="text-xs font-extrabold text-amber-400 uppercase tracking-wider">Technical Specifications</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-400 mb-1">Inverter kVA</label>
-                    <input type="text" value={inverterCapacity} onChange={(e) => setInverterCapacity(e.target.value)} placeholder="15 kVA Hybrid System" className="w-full text-xs p-2.5 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl" />
+              <div className="space-y-4 pt-2 border-t border-slate-800/80">
+                <div className="flex justify-between items-center">
+                  <h4 className="text-xs font-extrabold text-amber-400 uppercase tracking-wider flex items-center space-x-2">
+                    <FaBolt className="text-amber-400" />
+                    <span>Technical Specifications & Quick Select Presets</span>
+                  </h4>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {/* Inverter Capacity */}
+                  <div className="space-y-1.5 bg-slate-900/60 p-3 rounded-2xl border border-slate-800">
+                    <label className="text-[11px] font-bold text-slate-300 flex items-center space-x-1.5">
+                      <FaBolt className="text-amber-400 text-xs" />
+                      <span>Inverter kVA Size</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={inverterCapacity}
+                      onChange={(e) => setInverterCapacity(e.target.value)}
+                      placeholder="e.g. 15 kVA Hybrid System"
+                      className="w-full text-xs p-2.5 bg-slate-950 border border-slate-800 text-slate-200 rounded-xl focus:ring-1 focus:ring-amber-500 focus:outline-none"
+                    />
+                    <div className="flex flex-wrap gap-1 pt-1">
+                      {['3.5 kVA', '5 kVA Hybrid', '7.5 kVA', '10 kVA Hybrid', '15 kVA Hybrid', '20 kVA Commercial', '30 kVA Solar'].map((preset) => (
+                        <button
+                          key={preset}
+                          type="button"
+                          onClick={() => setInverterCapacity(preset)}
+                          className={`text-[10px] px-2 py-0.5 rounded-lg border transition-all ${
+                            inverterCapacity === preset
+                              ? 'bg-amber-500 text-slate-950 font-bold border-amber-400'
+                              : 'bg-slate-900 text-slate-400 hover:text-white border-slate-800'
+                          }`}
+                        >
+                          {preset}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-400 mb-1">Solar Panels</label>
-                    <input type="text" value={solarPanels} onChange={(e) => setSolarPanels(e.target.value)} placeholder="16x 550W Panels" className="w-full text-xs p-2.5 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl" />
+
+                  {/* Solar Panels */}
+                  <div className="space-y-1.5 bg-slate-900/60 p-3 rounded-2xl border border-slate-800">
+                    <label className="text-[11px] font-bold text-slate-300 flex items-center space-x-1.5">
+                      <FaSolarPanel className="text-cyan-400 text-xs" />
+                      <span>Solar Panels & Watts</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={solarPanels}
+                      onChange={(e) => setSolarPanels(e.target.value)}
+                      placeholder="e.g. 16x 550W Panels (8.8 kW)"
+                      className="w-full text-xs p-2.5 bg-slate-950 border border-slate-800 text-slate-200 rounded-xl focus:ring-1 focus:ring-cyan-500 focus:outline-none"
+                    />
+                    <div className="flex flex-wrap gap-1 pt-1">
+                      {['4x 550W (2.2 kW)', '8x 550W (4.4 kW)', '12x 550W (6.6 kW)', '16x 550W (8.8 kW)', '24x 550W (13.2 kW)'].map((preset) => (
+                        <button
+                          key={preset}
+                          type="button"
+                          onClick={() => setSolarPanels(preset)}
+                          className={`text-[10px] px-2 py-0.5 rounded-lg border transition-all ${
+                            solarPanels === preset
+                              ? 'bg-cyan-500 text-slate-950 font-bold border-cyan-400'
+                              : 'bg-slate-900 text-slate-400 hover:text-white border-slate-800'
+                          }`}
+                        >
+                          {preset}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-400 mb-1">Battery Storage</label>
-                    <input type="text" value={batteryBank} onChange={(e) => setBatteryBank(e.target.value)} placeholder="2x 48V Lithium" className="w-full text-xs p-2.5 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl" />
+
+                  {/* Battery Bank */}
+                  <div className="space-y-1.5 bg-slate-900/60 p-3 rounded-2xl border border-slate-800">
+                    <label className="text-[11px] font-bold text-slate-300 flex items-center space-x-1.5">
+                      <FaBatteryFull className="text-emerald-400 text-xs" />
+                      <span>Battery Storage Capacity</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={batteryBank}
+                      onChange={(e) => setBatteryBank(e.target.value)}
+                      placeholder="e.g. 2x 48V 200Ah Lithium (20 kWh)"
+                      className="w-full text-xs p-2.5 bg-slate-950 border border-slate-800 text-slate-200 rounded-xl focus:ring-1 focus:ring-emerald-500 focus:outline-none"
+                    />
+                    <div className="flex flex-wrap gap-1 pt-1">
+                      {['5 kWh Lithium', '10 kWh Lithium', '15 kWh Lithium', '20 kWh LiFePO4', '30 kWh Industrial'].map((preset) => (
+                        <button
+                          key={preset}
+                          type="button"
+                          onClick={() => setBatteryBank(preset)}
+                          className={`text-[10px] px-2 py-0.5 rounded-lg border transition-all ${
+                            batteryBank === preset
+                              ? 'bg-emerald-500 text-slate-950 font-bold border-emerald-400'
+                              : 'bg-slate-900 text-slate-400 hover:text-white border-slate-800'
+                          }`}
+                        >
+                          {preset}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-400 mb-1">Location</label>
-                    <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Lekki Phase 1, Lagos" className="w-full text-xs p-2.5 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl" />
+
+                  {/* Location */}
+                  <div className="space-y-1.5 bg-slate-900/60 p-3 rounded-2xl border border-slate-800">
+                    <label className="text-[11px] font-bold text-slate-300 flex items-center space-x-1.5">
+                      <FaMapMarkerAlt className="text-rose-400 text-xs" />
+                      <span>Location</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      placeholder="e.g. Lekki Phase 1, Lagos"
+                      className="w-full text-xs p-2.5 bg-slate-950 border border-slate-800 text-slate-200 rounded-xl focus:ring-1 focus:ring-rose-500 focus:outline-none"
+                    />
+                    <div className="flex flex-wrap gap-1 pt-1">
+                      {['Lekki, Lagos', 'Ikoyi, Lagos', 'Victoria Island, Lagos', 'Ikeja, Lagos', 'Abuja, FCT'].map((preset) => (
+                        <button
+                          key={preset}
+                          type="button"
+                          onClick={() => setLocation(preset)}
+                          className={`text-[10px] px-2 py-0.5 rounded-lg border transition-all ${
+                            location === preset
+                              ? 'bg-rose-500 text-slate-950 font-bold border-rose-400'
+                              : 'bg-slate-900 text-slate-400 hover:text-white border-slate-800'
+                          }`}
+                        >
+                          {preset}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-400 mb-1">Completion Date</label>
-                    <input type="text" value={completionDate} onChange={(e) => setCompletionDate(e.target.value)} placeholder="Oct 2024" className="w-full text-xs p-2.5 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl" />
+
+                  {/* Completion Date */}
+                  <div className="space-y-1.5 bg-slate-900/60 p-3 rounded-2xl border border-slate-800">
+                    <label className="text-[11px] font-bold text-slate-300 flex items-center space-x-1.5">
+                      <FaCalendarAlt className="text-blue-400 text-xs" />
+                      <span>Completion Date</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={completionDate}
+                      onChange={(e) => setCompletionDate(e.target.value)}
+                      placeholder="e.g. Oct 2024"
+                      className="w-full text-xs p-2.5 bg-slate-950 border border-slate-800 text-slate-200 rounded-xl focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                    />
                   </div>
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-400 mb-1">Client Name</label>
-                    <input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} placeholder="Private Client" className="w-full text-xs p-2.5 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl" />
+
+                  {/* Client Name */}
+                  <div className="space-y-1.5 bg-slate-900/60 p-3 rounded-2xl border border-slate-800">
+                    <label className="text-[11px] font-bold text-slate-300 flex items-center space-x-1.5">
+                      <FaUserShield className="text-amber-300 text-xs" />
+                      <span>Client Name / Estate</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={clientName}
+                      onChange={(e) => setClientName(e.target.value)}
+                      placeholder="e.g. Luxury Estate Villa"
+                      className="w-full text-xs p-2.5 bg-slate-950 border border-slate-800 text-slate-200 rounded-xl focus:ring-1 focus:ring-amber-500 focus:outline-none"
+                    />
                   </div>
                 </div>
               </div>
 
-              {/* Descriptions */}
+              {/* Descriptions & Auto Generator */}
               <div className="space-y-4 pt-2 border-t border-slate-800/80">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Short Card Preview Description</label>
+                  <div className="flex justify-between items-center mb-1.5">
+                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+                      Short Card Preview Description
+                    </label>
+                    <button
+                      type="button"
+                      onClick={generateShortCardPreview}
+                      className="text-[11px] font-extrabold text-amber-400 hover:text-amber-300 bg-slate-900 px-3 py-1 rounded-xl border border-amber-500/30 flex items-center space-x-1 shadow-sm transition-all"
+                    >
+                      <FaMagic className="text-xs" />
+                      <span>+ Auto-Generate Preview from Specs</span>
+                    </button>
+                  </div>
                   <textarea
                     rows={2}
                     value={shortDescription}
