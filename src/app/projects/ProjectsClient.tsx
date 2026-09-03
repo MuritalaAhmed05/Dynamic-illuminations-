@@ -104,8 +104,12 @@ export default function ProjectsClient() {
               >
                 <div className="h-64 sm:h-72 overflow-hidden relative bg-slate-900">
                   <img
-                    src={project.coverImage}
+                    src={project.coverImage || '/images/panel1.jpg'}
                     alt={project.title}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = '/images/panel1.jpg';
+                    }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 left-4 bg-slate-950/85 backdrop-blur-md border border-slate-800 text-amber-400 text-xs font-bold px-3 py-1 rounded-full shadow-lg">

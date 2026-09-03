@@ -726,8 +726,25 @@ export default function DashboardClient() {
               {projects.map((proj) => (
                 <div key={proj.id} className="glass-dark border border-slate-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between group">
                   <div>
-                    <div className="relative h-48 overflow-hidden bg-slate-900">
-                      <img src={proj.coverImage} alt={proj.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <div className="relative h-52 overflow-hidden bg-slate-900">
+                      {proj.videoUrls && proj.videoUrls.length > 0 ? (
+                        <video
+                          src={proj.videoUrls[0]}
+                          controls
+                          preload="metadata"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <img
+                          src={proj.coverImage || '/images/panel1.jpg'}
+                          alt={proj.title}
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = '/images/panel1.jpg';
+                          }}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      )}
                       <div className="absolute top-3 left-3 bg-slate-950/85 text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-full border border-slate-800">
                         {proj.category}
                       </div>
@@ -1067,13 +1084,26 @@ export default function DashboardClient() {
                   </button>
                 </div>
 
-                <div className="space-y-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                   {videoUrls.map((vid, idx) => (
-                    <div key={idx} className="flex items-center justify-between bg-slate-900 p-2.5 rounded-xl border border-slate-800 text-xs">
-                      <span className="truncate text-slate-300 max-w-md">{vid}</span>
-                      <button type="button" onClick={() => removeVideoUrl(idx)} className="text-rose-400 hover:text-rose-300 p-1">
-                        <FaTimes />
-                      </button>
+                    <div key={idx} className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 relative group">
+                      <div className="flex items-center justify-between text-xs text-amber-400 font-bold">
+                        <span className="flex items-center space-x-1">
+                          <FaVideo />
+                          <span>Video #{idx + 1} Preview</span>
+                        </span>
+                        <button type="button" onClick={() => removeVideoUrl(idx)} className="text-rose-400 hover:text-rose-300 p-1 font-bold text-xs flex items-center space-x-1 bg-rose-950/60 rounded-lg px-2 py-0.5">
+                          <FaTimes className="text-[10px]" />
+                          <span>Remove</span>
+                        </button>
+                      </div>
+                      <video
+                        src={vid}
+                        controls
+                        preload="metadata"
+                        className="w-full h-36 rounded-xl bg-slate-950 object-cover border border-slate-800 shadow-md"
+                      />
+                      <div className="text-[10px] text-slate-400 truncate">{vid}</div>
                     </div>
                   ))}
                 </div>

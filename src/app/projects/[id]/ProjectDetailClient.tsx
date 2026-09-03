@@ -150,8 +150,12 @@ export default function ProjectDetailClient({ projectId }: { projectId: string }
                 className="w-full h-full cursor-pointer relative group"
               >
                 <img
-                  src={selectedMedia || project.coverImage}
+                  src={selectedMedia || project.coverImage || '/images/panel1.jpg'}
                   alt={project.title}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = '/images/panel1.jpg';
+                  }}
                   className="w-full h-full object-cover max-h-[550px] rounded-3xl transition-transform duration-300 group-hover:scale-102"
                 />
                 <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2 text-white font-bold text-xs">
@@ -208,7 +212,15 @@ export default function ProjectDetailClient({ projectId }: { projectId: string }
                         : 'border-slate-800 opacity-70 hover:opacity-100'
                     }`}
                   >
-                    <img src={img} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover" />
+                    <img
+                      src={img}
+                      alt={`Gallery ${idx + 1}`}
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = '/images/panel1.jpg';
+                      }}
+                      className="w-full h-full object-cover"
+                    />
                   </button>
                 );
               })}
