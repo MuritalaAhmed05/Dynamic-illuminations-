@@ -49,6 +49,7 @@ import {
 } from 'react-icons/fa';
 import { storage } from '../../../firebase';
 import { ref, uploadBytes, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { uploadToCloudinary, getCloudinaryConfig, saveCloudinaryConfig } from '../../../lib/cloudinaryService';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -131,12 +132,32 @@ function compressImageToDataUrl(file: File, maxWidth = 900, quality = 0.72): Pro
   });
 }
 
-// Upload file (image or video) to Firebase Cloud Storage with resumable progress tracking & fallback safety
+// Upload file (image or video) via Cloudinary (primary free option) or Firebase/Local fallback
 async function uploadMediaFile(
   file: File, 
   isVideo = false, 
   onProgress?: (pct: number, transferredMb: string, totalMb: string) => void
 ): Promise<string> {
+  const { cloudName, uploadPreset } = getCloudinaryConfig();
+
+  // 1. Primary: Use Cloudinary if keys are configured (100% free, no credit card / Firebase billing required)
+  if (cloudName && uploadPreset) {
+    try {
+      let uploadPayload: Blob | File = file;
+      if (!isVideo) {
+        uploadPayload = await compressImageToBlob(file, 1400, 0.82);
+      }
+      return await uploadToCloudinary(uploadPayload, isVideo, file.name, onProgress);
+    } catch (cloudinaryErr: any) {
+      console.warn('Cloudinary upload notice:', cloudinaryErr);
+      if (!isVideo) {
+        return await compressImageToDataUrl(file, 900, 0.72);
+      }
+      throw cloudinaryErr;
+    }
+  }
+
+  // 2. Secondary: Fallback to Firebase Storage if Cloudinary credentials are not set
   const sanitizedName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
   const path = `projects/${isVideo ? 'videos' : 'images'}/${Date.now()}_${sanitizedName}`;
   const storageRef = ref(storage, path);
@@ -153,7 +174,6 @@ async function uploadMediaFile(
     return await new Promise<string>((resolve, reject) => {
       const uploadTask = uploadBytesResumable(storageRef, uploadPayload, metadata);
 
-      // Timeout: 45s for images, 300s (5 mins) for 80MB+ HD videos
       const timeoutMs = isVideo ? 300000 : 45000;
       const timeout = setTimeout(() => {
         uploadTask.cancel();
@@ -187,12 +207,11 @@ async function uploadMediaFile(
       );
     });
   } catch (error) {
-    console.warn('Firebase Storage upload notice, using compressed local fallback:', error);
+    console.warn('Storage upload notice, using compressed local fallback:', error);
     if (!isVideo) {
-      // Fallback for images so uploading NEVER fails or stops
       return await compressImageToDataUrl(file, 900, 0.72);
     }
-    throw new Error('Video upload failed. Check network connection or paste a video link.');
+    throw new Error('Upload failed. Please configure Cloudinary Cloud Name and Upload Preset in Cloud Storage settings or check network.');
   }
 }
 
@@ -201,7 +220,12 @@ export default function DashboardClient() {
   const router = useRouter();
 
   const [mounted, setMounted] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<'projects' | 'team' | 'reviews'>('projects');
+  const [activeTab, setActiveTab] = useState<'projects' | 'team' | 'reviews' | 'storage'>('projects');
+
+  // Cloudinary Settings State
+  const [cloudinaryCloudName, setCloudinaryCloudName] = useState<string>('');
+  const [cloudinaryPreset, setCloudinaryPreset] = useState<string>('');
+  const [cloudinarySaveMsg, setCloudinarySaveMsg] = useState<string>('');
 
   const [projects, setProjects] = useState<ProjectItem[]>([]);
   const [reviews, setReviews] = useState<ReviewItem[]>([]);
@@ -270,6 +294,9 @@ export default function DashboardClient() {
   useEffect(() => {
     setMounted(true);
     AOS.init({ duration: 800, once: true });
+    const conf = getCloudinaryConfig();
+    setCloudinaryCloudName(conf.cloudName);
+    setCloudinaryPreset(conf.uploadPreset);
   }, []);
 
   useEffect(() => {
@@ -558,6 +585,13 @@ export default function DashboardClient() {
     });
   };
 
+  const handleSaveCloudinaryConfig = (e: React.FormEvent) => {
+    e.preventDefault();
+    saveCloudinaryConfig(cloudinaryCloudName, cloudinaryPreset);
+    setCloudinarySaveMsg('Cloudinary Storage credentials saved! Unlimited free video and image uploads enabled.');
+    setTimeout(() => setCloudinarySaveMsg(''), 5000);
+  };
+
   const handleLogout = async () => {
     await logout();
     router.push('/admin/login');
@@ -647,6 +681,18 @@ export default function DashboardClient() {
         >
           <FaUsers />
           <span>Admin Team Management ({adminTeamUsers.length})</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('storage')}
+          className={`px-5 py-2.5 rounded-xl text-xs font-extrabold flex items-center space-x-2 transition-all ${
+            activeTab === 'storage'
+              ? 'bg-amber-500 text-slate-950 shadow-md'
+              : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+          }`}
+        >
+          <FaUpload />
+          <span>Free Cloud Storage (Cloudinary)</span>
         </button>
       </div>
 
@@ -847,6 +893,76 @@ export default function DashboardClient() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* TAB 4: FREE CLOUD STORAGE (CLOUDINARY) */}
+      {activeTab === 'storage' && (
+        <div className="max-w-4xl mx-auto space-y-6">
+          <div className="glass-dark p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-xl">
+            <h2 className="text-xl font-bold text-white mb-2 flex items-center space-x-2">
+              <FaUpload className="text-amber-400" />
+              <span>Configure Free Cloud Storage (Cloudinary)</span>
+            </h2>
+            <p className="text-xs text-slate-400 mb-6 leading-relaxed">
+              Upload photos and <strong>80MB+ videos</strong> 100% free without adding any billing account to Firebase! 
+              Cloudinary provides 25 GB of free storage and bandwidth with no credit card required.
+            </p>
+
+            {cloudinarySaveMsg && (
+              <div className="mb-6 p-4 bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 rounded-xl text-xs font-bold">
+                {cloudinarySaveMsg}
+              </div>
+            )}
+
+            <form onSubmit={handleSaveCloudinaryConfig} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1.5">Cloud Name</label>
+                <input
+                  type="text"
+                  placeholder="e.g. dxyz123"
+                  value={cloudinaryCloudName}
+                  onChange={(e) => setCloudinaryCloudName(e.target.value)}
+                  className="w-full text-xs p-3.5 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1.5">Upload Preset (Unsigned)</label>
+                <input
+                  type="text"
+                  placeholder="e.g. dynamic_illuminations"
+                  value={cloudinaryPreset}
+                  onChange={(e) => setCloudinaryPreset(e.target.value)}
+                  className="w-full text-xs p-3.5 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-3.5 rounded-xl text-xs shadow-md flex items-center justify-center space-x-2"
+              >
+                <FaCheck />
+                <span>Save Storage Credentials</span>
+              </button>
+            </form>
+          </div>
+
+          <div className="glass-dark p-6 rounded-2xl border border-slate-800 text-xs text-slate-300 space-y-3">
+            <h3 className="text-sm font-bold text-white flex items-center space-x-2">
+              <FaInfoCircle className="text-cyan-400" />
+              <span>30-Second Cloudinary Quick Setup Guide</span>
+            </h3>
+            <ol className="list-decimal list-inside space-y-2 text-slate-400 leading-relaxed">
+              <li>Sign up for a free account at <a href="https://cloudinary.com" target="_blank" rel="noopener noreferrer" className="text-amber-400 underline">Cloudinary.com</a> (No credit card needed).</li>
+              <li>Copy your <strong>Cloud Name</strong> from the Cloudinary Dashboard.</li>
+              <li>Go to <strong>Settings (gear icon) &gt; Upload &gt; Upload presets</strong> and click <strong>Add upload preset</strong>.</li>
+              <li>Set <em>Signing Mode</em> to <strong>Unsigned</strong>, save it, and copy the <strong>Upload preset name</strong>.</li>
+              <li>Paste both keys above and click <strong>Save Storage Credentials</strong>. You can now upload photos and 80MB+ videos instantly!</li>
+            </ol>
           </div>
         </div>
       )}
