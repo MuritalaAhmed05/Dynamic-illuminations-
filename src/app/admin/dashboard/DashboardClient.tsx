@@ -726,25 +726,16 @@ export default function DashboardClient() {
               {projects.map((proj) => (
                 <div key={proj.id} className="glass-dark border border-slate-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between group">
                   <div>
-                    <div className="relative h-52 overflow-hidden bg-slate-900">
-                      {proj.videoUrls && proj.videoUrls.length > 0 ? (
-                        <video
-                          src={proj.videoUrls[0]}
-                          controls
-                          preload="metadata"
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <img
-                          src={proj.coverImage || '/images/panel1.jpg'}
-                          alt={proj.title}
-                          onError={(e) => {
-                            e.currentTarget.onerror = null;
-                            e.currentTarget.src = '/images/panel1.jpg';
-                          }}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      )}
+                    <div className="relative h-48 overflow-hidden bg-slate-900">
+                      <img
+                        src={proj.coverImage || '/images/panel1.jpg'}
+                        alt={proj.title}
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = '/images/panel1.jpg';
+                        }}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
                       <div className="absolute top-3 left-3 bg-slate-950/85 text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-full border border-slate-800">
                         {proj.category}
                       </div>
@@ -1018,8 +1009,19 @@ export default function DashboardClient() {
                 </div>
 
                 {coverImage && (
-                  <div className="relative w-32 h-20 rounded-xl overflow-hidden border border-slate-700">
-                    <img src={coverImage} alt="Cover Preview" className="w-full h-full object-cover" />
+                  <div className="space-y-1.5">
+                    <div className="text-[11px] font-bold text-slate-400">Cover Image Square Preview:</div>
+                    <div className="relative aspect-square w-28 sm:w-32 rounded-2xl overflow-hidden border border-slate-700 bg-slate-900 shadow-md">
+                      <img
+                        src={coverImage || '/images/panel1.jpg'}
+                        alt="Cover Preview"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = '/images/panel1.jpg';
+                        }}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                   </div>
                 )}
               </div>
@@ -1037,14 +1039,23 @@ export default function DashboardClient() {
                   </label>
                 </div>
 
-                <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
                   {galleryImages.map((img, idx) => (
-                    <div key={idx} className="relative w-full h-16 rounded-xl overflow-hidden border border-slate-700 group">
-                      <img src={img} alt={`Gallery ${idx}`} className="w-full h-full object-cover" />
+                    <div key={idx} className="relative aspect-square w-full rounded-2xl overflow-hidden border border-slate-700 bg-slate-900 group shadow-md">
+                      <img
+                        src={img}
+                        alt={`Gallery ${idx}`}
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = '/images/panel1.jpg';
+                        }}
+                        className="w-full h-full object-cover"
+                      />
                       <button
                         type="button"
                         onClick={() => removeGalleryImage(idx)}
-                        className="absolute top-1 right-1 bg-rose-600 text-white rounded-full p-1 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute top-1.5 right-1.5 bg-rose-600/90 hover:bg-rose-600 text-white rounded-full p-1.5 text-[10px] shadow-lg opacity-90 group-hover:opacity-100 transition-opacity"
+                        title="Remove Photo"
                       >
                         <FaTimes />
                       </button>
@@ -1084,29 +1095,31 @@ export default function DashboardClient() {
                   </button>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  {videoUrls.map((vid, idx) => (
-                    <div key={idx} className="bg-slate-900 border border-slate-800 rounded-2xl p-3 space-y-2 relative group">
-                      <div className="flex items-center justify-between text-xs text-amber-400 font-bold">
-                        <span className="flex items-center space-x-1">
-                          <FaVideo />
-                          <span>Video #{idx + 1} Preview</span>
-                        </span>
-                        <button type="button" onClick={() => removeVideoUrl(idx)} className="text-rose-400 hover:text-rose-300 p-1 font-bold text-xs flex items-center space-x-1 bg-rose-950/60 rounded-lg px-2 py-0.5">
-                          <FaTimes className="text-[10px]" />
-                          <span>Remove</span>
-                        </button>
-                      </div>
-                      <video
-                        src={vid}
-                        controls
-                        preload="metadata"
-                        className="w-full h-36 rounded-xl bg-slate-950 object-cover border border-slate-800 shadow-md"
-                      />
-                      <div className="text-[10px] text-slate-400 truncate">{vid}</div>
+                {videoUrls.length > 0 && (
+                  <div className="space-y-1.5">
+                    <div className="text-[11px] font-bold text-slate-400">Video Square Previews:</div>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                      {videoUrls.map((vid, idx) => (
+                        <div key={idx} className="relative aspect-square w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 group shadow-md flex flex-col justify-between p-1.5">
+                          <video
+                            src={vid}
+                            controls
+                            preload="metadata"
+                            className="w-full h-full object-cover rounded-xl bg-black"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removeVideoUrl(idx)}
+                            className="absolute top-2 right-2 z-10 bg-rose-600/90 hover:bg-rose-600 text-white rounded-full p-1.5 text-[10px] shadow-lg transition-transform hover:scale-110"
+                            title="Remove Video"
+                          >
+                            <FaTimes />
+                          </button>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                )}
               </div>
 
               {/* Technical Specs */}
