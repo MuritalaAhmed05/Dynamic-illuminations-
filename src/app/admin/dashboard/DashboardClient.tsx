@@ -731,8 +731,10 @@ export default function DashboardClient() {
                         src={proj.coverImage || '/images/panel1.jpg'}
                         alt={proj.title}
                         onError={(e) => {
-                          e.currentTarget.onerror = null;
-                          e.currentTarget.src = '/images/panel1.jpg';
+                          const target = e.currentTarget;
+                          if (target.src && !target.src.includes('data:image') && !target.src.includes('panel1.jpg')) {
+                            target.src = '/images/panel1.jpg';
+                          }
                         }}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
@@ -1016,8 +1018,10 @@ export default function DashboardClient() {
                         src={coverImage || '/images/panel1.jpg'}
                         alt="Cover Preview"
                         onError={(e) => {
-                          e.currentTarget.onerror = null;
-                          e.currentTarget.src = '/images/panel1.jpg';
+                          const target = e.currentTarget;
+                          if (target.src && !target.src.includes('data:image') && !target.src.includes('panel1.jpg')) {
+                            target.src = '/images/panel1.jpg';
+                          }
                         }}
                         className="w-full h-full object-cover"
                       />
@@ -1046,8 +1050,10 @@ export default function DashboardClient() {
                         src={img}
                         alt={`Gallery ${idx}`}
                         onError={(e) => {
-                          e.currentTarget.onerror = null;
-                          e.currentTarget.src = '/images/panel1.jpg';
+                          const target = e.currentTarget;
+                          if (target.src && !target.src.includes('data:image') && !target.src.includes('panel1.jpg')) {
+                            target.src = '/images/panel1.jpg';
+                          }
                         }}
                         className="w-full h-full object-cover"
                       />

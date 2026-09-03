@@ -107,8 +107,10 @@ export default function ProjectsClient() {
                     src={project.coverImage || '/images/panel1.jpg'}
                     alt={project.title}
                     onError={(e) => {
-                      e.currentTarget.onerror = null;
-                      e.currentTarget.src = '/images/panel1.jpg';
+                      const target = e.currentTarget;
+                      if (target.src && !target.src.includes('data:image') && !target.src.includes('panel1.jpg')) {
+                        target.src = '/images/panel1.jpg';
+                      }
                     }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
