@@ -102,7 +102,7 @@ export default function ProjectsClient() {
                 className="glass-dark rounded-3xl border border-slate-800 overflow-hidden shadow-xl hover:border-slate-700 transition-all duration-300 flex flex-col justify-between group"
                 data-aos="fade-up"
               >
-                <div className="h-64 sm:h-72 overflow-hidden relative bg-slate-900">
+                <div className="relative aspect-[4/3] sm:aspect-[16/10] w-full overflow-hidden bg-slate-900">
                   <img
                     src={project.coverImage || '/images/panel1.jpg'}
                     alt={project.title}

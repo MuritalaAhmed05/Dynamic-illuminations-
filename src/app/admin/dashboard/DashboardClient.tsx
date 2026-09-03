@@ -726,7 +726,7 @@ export default function DashboardClient() {
               {projects.map((proj) => (
                 <div key={proj.id} className="glass-dark border border-slate-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between group">
                   <div>
-                    <div className="relative h-48 overflow-hidden bg-slate-900">
+                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
                       <img
                         src={proj.coverImage || '/images/panel1.jpg'}
                         alt={proj.title}
