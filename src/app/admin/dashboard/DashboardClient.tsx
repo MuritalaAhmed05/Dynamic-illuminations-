@@ -682,18 +682,6 @@ export default function DashboardClient() {
           <FaUsers />
           <span>Admin Team Management ({adminTeamUsers.length})</span>
         </button>
-
-        <button
-          onClick={() => setActiveTab('storage')}
-          className={`px-5 py-2.5 rounded-xl text-xs font-extrabold flex items-center space-x-2 transition-all ${
-            activeTab === 'storage'
-              ? 'bg-amber-500 text-slate-950 shadow-md'
-              : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
-          }`}
-        >
-          <FaUpload />
-          <span>Free Cloud Storage (Cloudinary)</span>
-        </button>
       </div>
 
       {statusMsg.text && (
@@ -893,76 +881,6 @@ export default function DashboardClient() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* TAB 4: FREE CLOUD STORAGE (CLOUDINARY) */}
-      {activeTab === 'storage' && (
-        <div className="max-w-4xl mx-auto space-y-6">
-          <div className="glass-dark p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-xl">
-            <h2 className="text-xl font-bold text-white mb-2 flex items-center space-x-2">
-              <FaUpload className="text-amber-400" />
-              <span>Configure Free Cloud Storage (Cloudinary)</span>
-            </h2>
-            <p className="text-xs text-slate-400 mb-6 leading-relaxed">
-              Upload photos and <strong>80MB+ videos</strong> 100% free without adding any billing account to Firebase! 
-              Cloudinary provides 25 GB of free storage and bandwidth with no credit card required.
-            </p>
-
-            {cloudinarySaveMsg && (
-              <div className="mb-6 p-4 bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 rounded-xl text-xs font-bold">
-                {cloudinarySaveMsg}
-              </div>
-            )}
-
-            <form onSubmit={handleSaveCloudinaryConfig} className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">Cloud Name</label>
-                <input
-                  type="text"
-                  placeholder="e.g. dxyz123"
-                  value={cloudinaryCloudName}
-                  onChange={(e) => setCloudinaryCloudName(e.target.value)}
-                  className="w-full text-xs p-3.5 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">Upload Preset (Unsigned)</label>
-                <input
-                  type="text"
-                  placeholder="e.g. dynamic_illuminations"
-                  value={cloudinaryPreset}
-                  onChange={(e) => setCloudinaryPreset(e.target.value)}
-                  className="w-full text-xs p-3.5 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none"
-                  required
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-3.5 rounded-xl text-xs shadow-md flex items-center justify-center space-x-2"
-              >
-                <FaCheck />
-                <span>Save Storage Credentials</span>
-              </button>
-            </form>
-          </div>
-
-          <div className="glass-dark p-6 rounded-2xl border border-slate-800 text-xs text-slate-300 space-y-3">
-            <h3 className="text-sm font-bold text-white flex items-center space-x-2">
-              <FaInfoCircle className="text-cyan-400" />
-              <span>30-Second Cloudinary Quick Setup Guide</span>
-            </h3>
-            <ol className="list-decimal list-inside space-y-2 text-slate-400 leading-relaxed">
-              <li>Sign up for a free account at <a href="https://cloudinary.com" target="_blank" rel="noopener noreferrer" className="text-amber-400 underline">Cloudinary.com</a> (No credit card needed).</li>
-              <li>Copy your <strong>Cloud Name</strong> from the Cloudinary Dashboard.</li>
-              <li>Go to <strong>Settings (gear icon) &gt; Upload &gt; Upload presets</strong> and click <strong>Add upload preset</strong>.</li>
-              <li>Set <em>Signing Mode</em> to <strong>Unsigned</strong>, save it, and copy the <strong>Upload preset name</strong>.</li>
-              <li>Paste both keys above and click <strong>Save Storage Credentials</strong>. You can now upload photos and 80MB+ videos instantly!</li>
-            </ol>
           </div>
         </div>
       )}
