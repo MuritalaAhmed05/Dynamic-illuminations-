@@ -8,10 +8,10 @@ service firebase.storage {
       allow read: if true;
 
       // Security & Cost Protection:
-      // 1. Restrict file size to max 50MB (prevents storage quota & billing abuse)
+      // 1. Restrict file size to max 100MB (allows high quality installation videos up to 80MB+)
       // 2. Restrict MIME types strictly to images (jpeg, png, webp, etc.) and videos (mp4, webm, etc.)
       // 3. Blocks executable files (.exe, .apk, .ipa, .sh, etc.)
-      allow create, update: if request.resource.size < 50 * 1024 * 1024
+      allow create, update: if request.resource.size < 100 * 1024 * 1024
                             && (request.resource.contentType.matches('image/.*') 
                                 || request.resource.contentType.matches('video/.*'));
 

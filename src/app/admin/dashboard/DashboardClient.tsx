@@ -52,12 +52,58 @@ import { ref, uploadBytes, uploadBytesResumable, getDownloadURL } from 'firebase
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-// Helper function to compress images before storing/uploading
-function compressImageFile(file: File, maxWidth = 1200, quality = 0.8): Promise<string> {
+// Helper function to compress images efficiently to a Blob (for Cloud Storage)
+function compressImageToBlob(file: File, maxWidth = 1400, quality = 0.82): Promise<Blob> {
   return new Promise((resolve) => {
+    if (file.size <= 400 * 1024) {
+      resolve(file);
+      return;
+    }
+
     const reader = new FileReader();
+    reader.onerror = () => resolve(file);
     reader.onload = (e) => {
       const img = new Image();
+      img.onerror = () => resolve(file);
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob(
+            (blob) => resolve(blob || file),
+            'image/jpeg',
+            quality
+          );
+        } else {
+          resolve(file);
+        }
+      };
+      img.src = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// Fallback helper: compress image to Data URL if Cloud Storage is unreachable
+function compressImageToDataUrl(file: File, maxWidth = 900, quality = 0.72): Promise<string> {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onerror = () => resolve('');
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onerror = () => resolve(e.target?.result as string);
       img.onload = () => {
         const canvas = document.createElement('canvas');
         let width = img.width;
@@ -85,19 +131,7 @@ function compressImageFile(file: File, maxWidth = 1200, quality = 0.8): Promise<
   });
 }
 
-function dataURLtoBlob(dataurl: string): Blob {
-  const arr = dataurl.split(',');
-  const mime = arr[0].match(/:(.*?);/)?.[1] || 'image/jpeg';
-  const bstr = atob(arr[1]);
-  let n = bstr.length;
-  const u8arr = new Uint8Array(n);
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
-  return new Blob([u8arr], { type: mime });
-}
-
-// Upload file to Firebase Cloud Storage with live progress tracking and timeout safeguard
+// Upload file (image or video) to Firebase Cloud Storage with resumable progress tracking & fallback safety
 async function uploadMediaFile(
   file: File, 
   isVideo = false, 
@@ -107,63 +141,59 @@ async function uploadMediaFile(
   const path = `projects/${isVideo ? 'videos' : 'images'}/${Date.now()}_${sanitizedName}`;
   const storageRef = ref(storage, path);
 
-  if (!isVideo) {
-    // Compress images first before uploading
-    try {
-      const compressedDataUrl = await compressImageFile(file, 1400, 0.82);
-      const blob = dataURLtoBlob(compressedDataUrl);
-      const snapshot = await uploadBytes(storageRef, blob);
-      return await getDownloadURL(snapshot.ref);
-    } catch (error) {
-      console.warn('Firebase Storage image upload notice, using compressed data URL fallback:', error);
-      return await compressImageFile(file, 900, 0.72);
+  try {
+    let uploadPayload: Blob | File = file;
+    if (!isVideo) {
+      uploadPayload = await compressImageToBlob(file, 1400, 0.82);
     }
+
+    const mimeType = file.type || (isVideo ? 'video/mp4' : 'image/jpeg');
+    const metadata = { contentType: mimeType };
+
+    return await new Promise<string>((resolve, reject) => {
+      const uploadTask = uploadBytesResumable(storageRef, uploadPayload, metadata);
+
+      // Timeout: 45s for images, 300s (5 mins) for 80MB+ HD videos
+      const timeoutMs = isVideo ? 300000 : 45000;
+      const timeout = setTimeout(() => {
+        uploadTask.cancel();
+        reject(new Error('Cloud Storage upload timed out.'));
+      }, timeoutMs);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const total = snapshot.totalBytes && snapshot.totalBytes > 0 ? snapshot.totalBytes : (uploadPayload.size || 1);
+          const transferred = snapshot.bytesTransferred || 0;
+          const rawPct = total > 0 ? Math.round((transferred / total) * 100) : 0;
+          const pct = isNaN(rawPct) ? 0 : Math.min(100, Math.max(0, rawPct));
+          const transferredMb = (transferred / (1024 * 1024)).toFixed(1);
+          const totalMb = (total / (1024 * 1024)).toFixed(1);
+          if (onProgress) onProgress(pct, transferredMb, totalMb);
+        },
+        (error: any) => {
+          clearTimeout(timeout);
+          reject(error);
+        },
+        async () => {
+          clearTimeout(timeout);
+          try {
+            const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+            resolve(downloadUrl);
+          } catch (err) {
+            reject(err);
+          }
+        }
+      );
+    });
+  } catch (error) {
+    console.warn('Firebase Storage upload notice, using compressed local fallback:', error);
+    if (!isVideo) {
+      // Fallback for images so uploading NEVER fails or stops
+      return await compressImageToDataUrl(file, 900, 0.72);
+    }
+    throw new Error('Video upload failed. Check network connection or paste a video link.');
   }
-
-  // Videos: Resumable upload with progress listener & 90s timeout safeguard
-  return new Promise((resolve, reject) => {
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    const timeout = setTimeout(() => {
-      uploadTask.cancel();
-      reject(new Error('Video upload timed out. Check network connection or paste a video link instead.'));
-    }, 90000); // 90 seconds timeout safeguard
-
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const total = snapshot.totalBytes && snapshot.totalBytes > 0 ? snapshot.totalBytes : (file.size || 1);
-        const transferred = snapshot.bytesTransferred || 0;
-        const rawPct = total > 0 ? Math.round((transferred / total) * 100) : 0;
-        const pct = isNaN(rawPct) ? 0 : Math.min(100, Math.max(0, rawPct));
-        const transferredMb = (transferred / (1024 * 1024)).toFixed(1);
-        const totalMb = (total / (1024 * 1024)).toFixed(1);
-        if (onProgress) onProgress(pct, transferredMb, totalMb);
-      },
-      (error: any) => {
-        clearTimeout(timeout);
-        console.error('Firebase Storage video upload error:', error);
-        let errorMsg = 'Video upload failed.';
-        if (error?.code === 'storage/unauthorized') {
-          errorMsg = 'Upload blocked by Firebase Storage Security Rules. Please update Storage Rules in your Firebase Console.';
-        } else if (error?.code === 'storage/canceled') {
-          errorMsg = 'Video upload was canceled.';
-        } else if (error?.message) {
-          errorMsg = `Video upload error: ${error.message}`;
-        }
-        reject(new Error(errorMsg));
-      },
-      async () => {
-        clearTimeout(timeout);
-        try {
-          const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-          resolve(downloadUrl);
-        } catch (err) {
-          reject(err);
-        }
-      }
-    );
-  });
 }
 
 export default function DashboardClient() {
@@ -310,15 +340,17 @@ export default function DashboardClient() {
     if (!file) return;
 
     setIsUploadingMedia(true);
-    setUploadStatusText(`Uploading cover file "${file.name}"...`);
+    setUploadStatusText(`Preparing cover file "${file.name}"...`);
 
     try {
-      const url = await uploadMediaFile(file, false);
+      const url = await uploadMediaFile(file, false, (pct, transferredMb, totalMb) => {
+        setUploadStatusText(`Uploading cover image ("${file.name}"): ${pct}% (${transferredMb} MB / ${totalMb} MB)...`);
+      });
       setCoverImage(url);
       setStatusMsg({ type: 'success', text: 'Cover image uploaded successfully!' });
     } catch (err: any) {
       console.error('Cover upload error:', err);
-      setStatusMsg({ type: 'error', text: 'Failed to upload cover file from device.' });
+      setStatusMsg({ type: 'error', text: err?.message || 'Failed to upload cover file from device.' });
     } finally {
       setIsUploadingMedia(false);
       setUploadStatusText('');
@@ -336,14 +368,16 @@ export default function DashboardClient() {
     try {
       for (let i = 0; i < fileList.length; i++) {
         const file = fileList[i];
-        setUploadStatusText(`Uploading photo ${i + 1} of ${fileList.length} ("${file.name}")...`);
-        const url = await uploadMediaFile(file, false);
+        setUploadStatusText(`Preparing photo ${i + 1} of ${fileList.length} ("${file.name}")...`);
+        const url = await uploadMediaFile(file, false, (pct, transferredMb, totalMb) => {
+          setUploadStatusText(`Uploading photo ${i + 1} of ${fileList.length} ("${file.name}"): ${pct}% (${transferredMb} MB / ${totalMb} MB)...`);
+        });
         setGalleryImages((prev) => [...prev, url]);
       }
       setStatusMsg({ type: 'success', text: `Uploaded ${fileList.length} photo(s) successfully!` });
     } catch (err: any) {
       console.error('Gallery upload error:', err);
-      setStatusMsg({ type: 'error', text: 'Failed to upload gallery photos from device.' });
+      setStatusMsg({ type: 'error', text: err?.message || 'Failed to upload gallery photos from device.' });
     } finally {
       setIsUploadingMedia(false);
       setUploadStatusText('');
