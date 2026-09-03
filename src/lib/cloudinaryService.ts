@@ -3,8 +3,8 @@
  * Allows free image and 80MB+ video uploads without any Firebase billing account.
  */
 
-const DEFAULT_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'demo';
-const DEFAULT_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'unsigned_preset';
+const DEFAULT_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'dn7plghfy';
+const DEFAULT_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'dynamic illuminations';
 
 const STORAGE_KEY_CLOUD_NAME = 'dynamic_illuminations_cloudinary_cloud_name';
 const STORAGE_KEY_UPLOAD_PRESET = 'dynamic_illuminations_cloudinary_preset';
@@ -18,8 +18,8 @@ export function getCloudinaryConfig(): { cloudName: string; uploadPreset: string
   const savedPreset = localStorage.getItem(STORAGE_KEY_UPLOAD_PRESET);
 
   return {
-    cloudName: savedCloudName || process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || '',
-    uploadPreset: savedPreset || process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || '',
+    cloudName: savedCloudName || process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || DEFAULT_CLOUD_NAME,
+    uploadPreset: savedPreset || process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || DEFAULT_UPLOAD_PRESET,
   };
 }
 
@@ -30,26 +30,21 @@ export function saveCloudinaryConfig(cloudName: string, uploadPreset: string): v
   }
 }
 
-export function uploadToCloudinary(
+async function attemptCloudinaryPost(
+  cloudName: string,
+  preset: string,
   file: File | Blob,
-  isVideo = false,
+  isVideo: boolean,
   fileName?: string,
   onProgress?: (pct: number, transferredMb: string, totalMb: string) => void
 ): Promise<string> {
   return new Promise((resolve, reject) => {
-    const { cloudName, uploadPreset } = getCloudinaryConfig();
-
-    if (!cloudName || !uploadPreset) {
-      reject(new Error('Cloudinary Cloud Name and Upload Preset are required. Please configure them in Admin Settings.'));
-      return;
-    }
-
     const resourceType = isVideo ? 'video' : 'image';
-    const url = `https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`;
+    const url = `https://api.cloudinary.com/v1_1/${cloudName.trim()}/${resourceType}/upload`;
 
     const formData = new FormData();
     formData.append('file', file, fileName || (file as File).name || `upload_${Date.now()}`);
-    formData.append('upload_preset', uploadPreset);
+    formData.append('upload_preset', preset.trim());
 
     const xhr = new XMLHttpRequest();
     xhr.open('POST', url, true);
@@ -78,22 +73,46 @@ export function uploadToCloudinary(
       } else {
         try {
           const errRes = JSON.parse(xhr.responseText);
-          const msg = errRes.error?.message || `Cloudinary upload failed with status ${xhr.status}`;
+          const msg = errRes.error?.message || `Cloudinary upload failed (${xhr.status})`;
           reject(new Error(msg));
         } catch {
-          reject(new Error(`Cloudinary upload error (${xhr.status}). Check Cloud Name and Upload Preset.`));
+          reject(new Error(`Cloudinary upload error (${xhr.status})`));
         }
       }
     };
 
-    xhr.onerror = () => {
-      reject(new Error('Network error uploading file to Cloudinary. Check connection.'));
-    };
-
-    xhr.ontimeout = () => {
-      reject(new Error('Cloudinary upload timed out.'));
-    };
+    xhr.onerror = () => reject(new Error('Network error uploading file to Cloudinary.'));
+    xhr.ontimeout = () => reject(new Error('Cloudinary upload timed out.'));
 
     xhr.send(formData);
   });
+}
+
+export async function uploadToCloudinary(
+  file: File | Blob,
+  isVideo = false,
+  fileName?: string,
+  onProgress?: (pct: number, transferredMb: string, totalMb: string) => void
+): Promise<string> {
+  const { cloudName, uploadPreset } = getCloudinaryConfig();
+  const cName = cloudName || DEFAULT_CLOUD_NAME;
+  const cPreset = uploadPreset || DEFAULT_UPLOAD_PRESET;
+
+  try {
+    return await attemptCloudinaryPost(cName, cPreset, file, isVideo, fileName, onProgress);
+  } catch (err: any) {
+    // If preset contains space or underscore, attempt auto-conversion retry
+    const altPreset = cPreset.includes(' ')
+      ? cPreset.replace(/\s+/g, '_')
+      : cPreset.replace(/_/g, ' ');
+
+    if (altPreset !== cPreset) {
+      try {
+        return await attemptCloudinaryPost(cName, altPreset, file, isVideo, fileName, onProgress);
+      } catch {
+        throw err;
+      }
+    }
+    throw err;
+  }
 }
