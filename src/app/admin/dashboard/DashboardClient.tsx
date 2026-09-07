@@ -998,7 +998,7 @@ export default function DashboardClient() {
                   <label className="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-bold text-slate-200 px-4 py-3 rounded-xl cursor-pointer flex items-center space-x-2 flex-shrink-0">
                     <FaUpload className="text-amber-400" />
                     <span>Upload Cover File</span>
-                    <input type="file" accept="image/*" onChange={handleCoverUpload} className="hidden" disabled={isUploadingMedia} />
+                    <input type="file" accept="image/*,.heic,.heif" onChange={handleCoverUpload} className="hidden" disabled={isUploadingMedia} />
                   </label>
 
                   <input
@@ -1039,7 +1039,7 @@ export default function DashboardClient() {
                   <label className="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-bold text-slate-200 px-3 py-1.5 rounded-xl cursor-pointer flex items-center space-x-1.5">
                     <FaUpload className="text-cyan-400 text-xs" />
                     <span>+ Add Device Photos</span>
-                    <input type="file" accept="image/*" multiple onChange={handleGalleryUpload} className="hidden" disabled={isUploadingMedia} />
+                    <input type="file" accept="image/*,.heic,.heif" multiple onChange={handleGalleryUpload} className="hidden" disabled={isUploadingMedia} />
                   </label>
                 </div>
 
@@ -1079,7 +1079,7 @@ export default function DashboardClient() {
                   <label className="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-bold text-slate-200 px-3 py-1.5 rounded-xl cursor-pointer flex items-center space-x-1.5">
                     <FaVideo className="text-rose-400 text-xs" />
                     <span>+ Upload Video File</span>
-                    <input type="file" accept="video/*" multiple onChange={handleVideoUpload} className="hidden" disabled={isUploadingMedia} />
+                    <input type="file" accept="video/*,.mov,.mp4,.hevc,.m4v" multiple onChange={handleVideoUpload} className="hidden" disabled={isUploadingMedia} />
                   </label>
                 </div>
 
