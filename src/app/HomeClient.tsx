@@ -15,7 +15,8 @@ import {
   FaAward, 
   FaBolt,
   FaPiggyBank,
-  FaGasPump
+  FaGasPump,
+  FaFolderOpen
 } from 'react-icons/fa';
 import { MdOutlineElectricalServices } from 'react-icons/md';
 import MyCarousel from '../components/carousel';
@@ -80,18 +81,26 @@ export default function HomeClient() {
 
           <div data-aos="fade-up" data-aos-delay="200" className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/calculator"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-8 py-4 rounded-2xl shadow-md text-base transition-all transform hover:scale-105"
+              href="/projects"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-extrabold px-8 py-4 rounded-2xl shadow-xl text-base transition-all transform hover:scale-105"
             >
-              <FaCalculator className="text-xl" />
-              <span>Solar & ROI Savings Calculator</span>
+              <FaFolderOpen className="text-xl" />
+              <span>Explore Live Projects Portfolio & Videos</span>
+            </Link>
+
+            <Link
+              href="/calculator"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 bg-slate-900/90 hover:bg-slate-800 border border-slate-800 text-amber-400 font-bold px-7 py-4 rounded-2xl text-base transition-all transform hover:scale-105"
+            >
+              <FaCalculator className="text-lg" />
+              <span>ROI Calculator</span>
             </Link>
 
             <a
               href="https://wa.me/2348107533654?text=Hello%20Dynamic%20Illuminations!%20I%20would%20like%20to%20request%20a%20free%20quotation."
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 bg-slate-900/90 hover:bg-slate-800 border border-slate-800 text-white font-bold px-8 py-4 rounded-2xl text-base transition-all transform hover:scale-105"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 bg-slate-900/90 hover:bg-slate-800 border border-slate-800 text-white font-bold px-7 py-4 rounded-2xl text-base transition-all transform hover:scale-105"
             >
               <FaWhatsapp className="text-emerald-400 text-2xl" />
               <span>Get Free Quote</span>
@@ -123,11 +132,21 @@ export default function HomeClient() {
       {/* Featured Installation Carousel Section */}
       <section className="py-16 bg-slate-900/50 border-y border-slate-800">
         <div className="max-w-7xl mx-auto px-6 md:px-8">
-          <div className="text-center mb-8" data-aos="fade-up">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-wide">
-              Featured Lighting & Solar Installations
-            </h2>
-            <p className="text-sm text-slate-400 mt-2">Take a look at some of our recent high-profile installations across Nigeria.</p>
+          <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4" data-aos="fade-up">
+            <div className="text-left">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-wide">
+                Featured Lighting & Solar Installations
+              </h2>
+              <p className="text-sm text-slate-400 mt-1">Take a look at some of our recent high-profile installations across Nigeria.</p>
+            </div>
+            <Link
+              href="/projects"
+              className="inline-flex items-center space-x-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-6 py-3 rounded-2xl text-xs sm:text-sm shadow-lg transition-all transform hover:scale-105 flex-shrink-0"
+            >
+              <FaFolderOpen />
+              <span>View All Projects & Videos</span>
+              <FaArrowRight className="text-xs" />
+            </Link>
           </div>
           <MyCarousel images={places} />
         </div>
