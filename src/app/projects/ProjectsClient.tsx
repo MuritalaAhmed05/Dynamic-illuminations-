@@ -11,7 +11,6 @@ import 'aos/dist/aos.css';
 export default function ProjectsClient() {
   const [projects, setProjects] = useState<ProjectItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const { isAdmin } = useAuth();
 
   useEffect(() => {
@@ -25,11 +24,6 @@ export default function ProjectsClient() {
     }
     load();
   }, []);
-
-  const filteredProjects = useMemo(() => {
-    if (selectedCategory === 'All') return projects;
-    return projects.filter((p) => p.category === selectedCategory);
-  }, [projects, selectedCategory]);
 
   return (
     <div className="bg-slate-950 text-slate-100 min-h-screen py-16 px-6 sm:px-8 relative overflow-hidden">
@@ -67,97 +61,66 @@ export default function ProjectsClient() {
         )}
       </div>
 
-      {/* Category Tabs */}
-      <div className="max-w-6xl mx-auto mb-12 flex flex-wrap justify-center gap-2 relative z-10">
-        {['All', 'Solar Power', 'Architectural Lighting', 'Smart Home', 'Event Lighting', 'Commercial Setup'].map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setSelectedCategory(cat)}
-            className={`px-4 py-2 rounded-2xl text-xs font-bold transition-all ${
-              selectedCategory === cat
-                ? 'bg-amber-500 text-slate-950 shadow-md'
-                : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800'
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
       {/* Projects Grid */}
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10">
         {loading ? (
-          <div className="text-center py-16 border border-slate-800 rounded-3xl glass-dark">
+          <div className="text-center py-16 border border-slate-800 rounded-2xl glass-dark">
             <p className="text-slate-400">Loading live project portfolio...</p>
           </div>
-        ) : filteredProjects.length === 0 ? (
-          <div className="text-center py-16 border border-dashed border-slate-800 rounded-3xl glass-dark">
-            <p className="text-slate-400">No projects found in this category.</p>
+        ) : projects.length === 0 ? (
+          <div className="text-center py-16 border border-dashed border-slate-800 rounded-2xl glass-dark">
+            <p className="text-slate-400">No projects added yet.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {filteredProjects.map((project) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((project) => (
               <div
                 key={project.id}
-                className="glass-dark rounded-3xl border border-slate-800 overflow-hidden shadow-xl hover:border-slate-700 transition-all duration-300 flex flex-col justify-between group"
+                className="glass-dark border border-slate-800 rounded-2xl overflow-hidden shadow-xl hover:border-slate-700 transition-all duration-300 flex flex-col justify-between group"
                 data-aos="fade-up"
               >
-                <div className="relative aspect-[4/3] sm:aspect-[16/10] w-full overflow-hidden bg-slate-900">
-                  <img
-                    src={project.coverImage || '/images/panel1.jpg'}
-                    alt={project.title}
-                    onError={(e) => {
-                      const target = e.currentTarget;
-                      if (target.src && !target.src.includes('data:image') && !target.src.includes('panel1.jpg')) {
-                        target.src = '/images/panel1.jpg';
-                      }
-                    }}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-4 left-4 bg-slate-950/85 backdrop-blur-md border border-slate-800 text-amber-400 text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                    {project.category}
+                <div>
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
+                    <img
+                      src={project.coverImage || '/images/panel1.jpg'}
+                      alt={project.title}
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (target.src && !target.src.includes('data:image') && !target.src.includes('panel1.jpg')) {
+                          target.src = '/images/panel1.jpg';
+                        }
+                      }}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
 
-                  {/* Media Badges */}
-                  <div className="absolute bottom-4 right-4 flex space-x-2">
-                    {project.videoUrls && project.videoUrls.length > 0 && (
-                      <span className="bg-slate-950/80 backdrop-blur-md border border-slate-800 text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center space-x-1">
-                        <FaPlay className="text-[9px]" />
-                        <span>{project.videoUrls.length} Video{project.videoUrls.length > 1 ? 's' : ''}</span>
+                  <div className="p-5">
+                    <h2 className="text-lg font-bold text-white mb-2 line-clamp-1 group-hover:text-amber-400 transition-colors">
+                      {project.title}
+                    </h2>
+                    <p className="text-xs text-slate-400 line-clamp-2 mb-4 leading-relaxed">{project.shortDescription}</p>
+
+                    <div className="flex flex-wrap gap-2 text-[11px] text-slate-400 border-t border-slate-800/80 pt-3">
+                      <span className="flex items-center space-x-1">
+                        <FaImage className="text-cyan-400" />
+                        <span>{(project.galleryImages || []).length} Photos</span>
                       </span>
-                    )}
-                    {project.galleryImages && project.galleryImages.length > 0 && (
-                      <span className="bg-slate-950/80 backdrop-blur-md border border-slate-800 text-cyan-400 text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center space-x-1">
-                        <FaImage className="text-[9px]" />
-                        <span>{project.galleryImages.length} Photos</span>
+                      <span className="flex items-center space-x-1">
+                        <FaPlay className="text-amber-400 text-[9px]" />
+                        <span>{(project.videoUrls || []).length} Videos</span>
                       </span>
-                    )}
+                    </div>
                   </div>
                 </div>
 
-                <div className="p-6 sm:p-8 flex flex-col flex-grow justify-between">
-                  <div>
-                    <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 group-hover:text-amber-400 transition-colors">
-                      {project.title}
-                    </h2>
-                    <p className="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6">{project.shortDescription}</p>
-
-                    {/* Quick Specs Pill */}
-                    <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-300 bg-slate-900/60 p-3 rounded-xl border border-slate-800/80 mb-6">
-                      <div><strong className="text-amber-400">Inverter:</strong> {project.specs.inverterCapacity}</div>
-                      <div><strong className="text-cyan-400">Panels:</strong> {project.specs.solarPanels}</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-3">
-                    <Link
-                      href={`/projects/${project.id}`}
-                      className="flex-1 inline-flex items-center justify-center space-x-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3.5 px-6 rounded-xl shadow-md text-sm transition-all transform hover:-translate-y-0.5"
-                    >
-                      <FaEye />
-                      <span>View Full Details</span>
-                    </Link>
-                  </div>
+                <div className="p-5 pt-0 flex items-center space-x-2">
+                  <Link
+                    href={`/projects/${project.id}`}
+                    className="flex-1 bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-slate-200 text-xs font-semibold py-2.5 rounded-xl text-center border border-slate-800 hover:border-amber-400 flex items-center justify-center space-x-1.5 transition-all shadow-sm"
+                  >
+                    <FaEye />
+                    <span>View Details</span>
+                  </Link>
                 </div>
               </div>
             ))}

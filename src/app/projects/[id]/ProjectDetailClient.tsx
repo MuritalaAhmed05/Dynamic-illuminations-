@@ -232,10 +232,6 @@ export default function ProjectDetailClient({ projectId }: { projectId: string }
         <div className="lg:col-span-5 space-y-6" data-aos="fade-left">
           {/* Header Info */}
           <div className="glass-dark p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-xl space-y-4">
-            <div className="inline-block bg-slate-900 border border-slate-800 text-amber-400 text-xs font-bold px-3 py-1 rounded-full">
-              {project.category}
-            </div>
-
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
               {project.title}
             </h1>

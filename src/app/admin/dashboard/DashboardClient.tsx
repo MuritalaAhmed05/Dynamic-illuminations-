@@ -366,6 +366,13 @@ export default function DashboardClient() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const isHeic = file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif') || file.type.includes('heic') || file.type.includes('heif');
+    if (isHeic) {
+      setStatusMsg({ type: 'error', text: `"${file.name}" is an iPhone HEIC format photo. Please select a JPG/PNG photo or upload a screenshot.` });
+      e.target.value = '';
+      return;
+    }
+
     setIsUploadingMedia(true);
     setUploadStatusText(`Preparing cover file "${file.name}"...`);
 
@@ -395,13 +402,19 @@ export default function DashboardClient() {
     try {
       for (let i = 0; i < fileList.length; i++) {
         const file = fileList[i];
+        const isHeic = file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif') || file.type.includes('heic') || file.type.includes('heif');
+        if (isHeic) {
+          setStatusMsg({ type: 'error', text: `"${file.name}" is an iPhone HEIC photo. Please use JPG/PNG or a screenshot.` });
+          continue;
+        }
+
         setUploadStatusText(`Preparing photo ${i + 1} of ${fileList.length} ("${file.name}")...`);
         const url = await uploadMediaFile(file, false, (pct, transferredMb, totalMb) => {
           setUploadStatusText(`Uploading photo ${i + 1} of ${fileList.length} ("${file.name}"): ${pct}% (${transferredMb} MB / ${totalMb} MB)...`);
         });
         setGalleryImages((prev) => [...prev, url]);
       }
-      setStatusMsg({ type: 'success', text: `Uploaded ${fileList.length} photo(s) successfully!` });
+      setStatusMsg({ type: 'success', text: `Uploaded photo(s) successfully!` });
     } catch (err: any) {
       console.error('Gallery upload error:', err);
       setStatusMsg({ type: 'error', text: err?.message || 'Failed to upload gallery photos from device.' });
@@ -738,9 +751,6 @@ export default function DashboardClient() {
                         }}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute top-3 left-3 bg-slate-950/85 text-amber-400 text-[11px] font-bold px-2.5 py-1 rounded-full border border-slate-800">
-                        {proj.category}
-                      </div>
                     </div>
 
                     <div className="p-5">
